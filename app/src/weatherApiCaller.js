@@ -20,6 +20,7 @@ const asyncGetCurrentPosition = (options={}) => new Promise((resolve, reject) =>
 });
 
 const getWeatherData = async () => {
+    console.log("LOLFSDJFSDFJSDKJFKDSFJSD")
     const { latitude, longitude } = (await asyncGetCurrentPosition()).coords;
     const coordAccuracy = 4;
     const route = `${baseUrl}points/${latitude.toFixed(coordAccuracy)},${longitude.toFixed(coordAccuracy)}`;

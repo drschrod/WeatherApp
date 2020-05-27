@@ -27,9 +27,7 @@ import {
 import { getWeatherData } from './src/weatherApiCaller'
 
 const App: () => React$Node = () => {
-  state = {
-    weather: getWeatherData(),
-  }
+  getWeatherData()
   return (
     <>
       <StatusBar barStyle="dark-content" />
