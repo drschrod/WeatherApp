@@ -24,10 +24,12 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import { rootWeatherData } from './src/weatherApiCaller'
+import { getWeatherData } from './src/weatherApiCaller'
 
 const App: () => React$Node = () => {
-  rootWeatherData();
+  state = {
+    weather: getWeatherData(),
+  }
   return (
     <>
       <StatusBar barStyle="dark-content" />

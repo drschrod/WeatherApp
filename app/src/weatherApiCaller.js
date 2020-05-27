@@ -2,28 +2,51 @@ import Geolocation from '@react-native-community/geolocation';
 
 const baseUrl = "https://api.weather.gov/"
 
-const routes = {
-    rootWeatherData: "points/{lat},{lon}"
+const transformForecastData = data => ({
+    updatedAt: data.updated,
+    units: data.units,
+    elevation: data.elevation,
+    forecast: data.periods
+});
+
+const getForecast = async (route) => {
+    let response = await fetch(route);
+    let data = await response.json();
+    return transformForecastData(data.properties);
 }
 
 const asyncGetCurrentPosition = (options={}) => new Promise((resolve, reject) => {
     Geolocation.getCurrentPosition(resolve, reject, options);
 });
-const rootWeatherData = async () => {
+
+const getWeatherData = async () => {
     const { latitude, longitude } = (await asyncGetCurrentPosition()).coords;
     const coordAccuracy = 4;
     const route = `${baseUrl}points/${latitude.toFixed(coordAccuracy)},${longitude.toFixed(coordAccuracy)}`;
-    console.log(route)
     try {
-        let response = await fetch(route);
-        let json = await response.json();
-        console.log(json)
-        return json;
+        const response = await fetch(route);
+        const json = await response.json();
+        const { city, state } = json.properties.relativeLocation.properties;
+        const hourlyForecastRoute = json.properties.forecastHourly;
+        const hourlyForecast = await getForecast(hourlyForecastRoute);
+
+        const dailyForecastRoute = json.properties.forecast;
+        const dailyForecast = await getForecast(dailyForecastRoute);
+
+        return {
+            city,
+            state,
+            forecast: {
+                hourly: hourlyForecast,
+                daily: dailyForecast
+            }
+        };
     } catch (error) {
         console.error(error);
     }
+    return null;
 }
 
 module.exports = {
-    rootWeatherData
+    getWeatherData
 }
