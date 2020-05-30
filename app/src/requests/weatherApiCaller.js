@@ -19,27 +19,30 @@ const asyncGetCurrentPosition = (options={}) => new Promise((resolve, reject) =>
     Geolocation.getCurrentPosition(resolve, reject, options);
 });
 
-const getWeatherData = async () => {
-    console.log("LOLFSDJFSDFJSDKJFKDSFJSD")
-    const { latitude, longitude } = (await asyncGetCurrentPosition()).coords;
+const getWeatherData = async (location) => {
+    const {longitude, latitude} = location.coords;
     const coordAccuracy = 4;
     const route = `${baseUrl}points/${latitude.toFixed(coordAccuracy)},${longitude.toFixed(coordAccuracy)}`;
     try {
-        const response = await fetch(route);
-        const json = await response.json();
+        const baseData = await fetch(route);
+        const json = await baseData.json();
         const { city, state } = json.properties.relativeLocation.properties;
-        const hourlyForecastRoute = json.properties.forecastHourly;
-        const hourlyForecast = await getForecast(hourlyForecastRoute);
 
+        const hourlyForecastRoute = json.properties.forecastHourly;
         const dailyForecastRoute = json.properties.forecast;
-        const dailyForecast = await getForecast(dailyForecastRoute);
+        const hourlyForecast = await getForecast(hourlyForecastRoute)
 
         return {
-            city,
-            state,
+            location: {
+                city,
+                state,
+                latitude,
+                longitude,
+            },            
             forecast: {
-                hourly: hourlyForecast,
-                daily: dailyForecast
+                current: hourlyForecast.forecast[0],
+                hourly: await getForecast(hourlyForecastRoute),
+                daily: await getForecast(dailyForecastRoute)
             }
         };
     } catch (error) {
@@ -49,5 +52,6 @@ const getWeatherData = async () => {
 }
 
 module.exports = {
+    asyncGetCurrentPosition,
     getWeatherData
 }
