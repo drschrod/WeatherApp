@@ -7,6 +7,13 @@
 make initial-setup
 ```
 
+## How to run
+Specifically how to run after initially setting up.
+If you close the project or reboot your computer for whatever reason and want to start working on the project again use these commands:
+```bash
+make run-ios
+```
+
 ## Linting:
 
 To run the linter just run:
