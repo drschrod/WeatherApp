@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Text, StyleSheet } from "react-native";
+import React, {Component} from 'react';
+import {Text, StyleSheet} from 'react-native';
 
 export default class Temperature extends Component {
   constructor(props) {
@@ -8,11 +8,11 @@ export default class Temperature extends Component {
   }
 
   render() {
-    const { temperature, temperatureUnit } = this.props;
+    const {temperature, temperatureUnit} = this.props;
     // Todo: gradient function for the temperature
-    const textColor = temperature >= 80 ? 'red' : 'blue';
+    const textColor = {color: temperature >= 80 ? 'red' : 'blue'};
     return (
-      <Text style={styles.temperatureText}>
+      <Text style={[styles.temperatureText, textColor]}>
         <Text style={styles.titleText} onPress={this.onPressTitle}>
           {`${temperature}° ${temperatureUnit}`}
         </Text>
@@ -23,10 +23,9 @@ export default class Temperature extends Component {
 
 const styles = StyleSheet.create({
   temperatureText: {
-    fontFamily: "Cochin",
+    fontFamily: 'Cochin',
     fontSize: 50,
-    fontWeight: "bold",
-    color: "white",
-    backgroundColor: "black"
-  }
+    fontWeight: 'bold',
+    color: 'white',
+  },
 });

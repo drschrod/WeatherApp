@@ -9,3 +9,9 @@ run:
 # make build-ios
 build-ios:
 	yarn react-native run-ios
+
+lint-fix:
+	yarn eslint --fix .
+
+lint:
+	yarn eslint .

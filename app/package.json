@@ -7,10 +7,13 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint-fix": "eslint --fix ."
+    
   },
   "dependencies": {
     "@react-native-community/geolocation": "^2.0.2",
+    "pre-commit": "^1.2.2",
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-webview": "^9.4.0"
@@ -28,5 +31,8 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "pre-commit": [
+    "lint-fix"
+  ]
 }
