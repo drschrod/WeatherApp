@@ -18,6 +18,14 @@ lint-fix:
 lint:
 	yarn lint
 
+test:
+	${MAKE} lint-fix
+	yarn test
+
+test-watch:
+	${MAKE} lint-fix
+	yarn test-watch
+
 ## Mac only commands:
 ## Other neat commands: https://medium.com/xcblog/simctl-control-ios-simulators-from-command-line-78b9006a20dc
 setup-ios:
