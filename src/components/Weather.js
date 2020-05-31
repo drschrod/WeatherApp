@@ -3,6 +3,8 @@ import {ActivityIndicator, Text, StyleSheet, View} from 'react-native';
 
 import Temperature from './Temperature';
 import HourlyForecast from './HourlyForecast';
+import DailyForecast from './DailyForecast';
+import Forecasts from './Forecasts';
 import {
   getWeatherData,
   asyncGetCurrentPosition,
@@ -17,6 +19,12 @@ export default class Weather extends Component {
     asyncGetCurrentPosition()
       .then(location => getWeatherData(location))
       .then(weatherData => this.setState({weatherData, loading: false}));
+    
+    setInterval(() => {
+      this.setState({
+        currentHour: new Date().getHours(),
+      });
+    }, 60000);
   }
   render() {
     if (this.state.loading) {
@@ -44,6 +52,7 @@ export default class Weather extends Component {
     return (
       <View>
         <Text style={styles.baseText}>
+          <Text>Currently</Text>
           <Temperature
             temperature={temperature}
             temperatureUnit={temperatureUnit}
@@ -53,6 +62,9 @@ export default class Weather extends Component {
         </Text>
         <HourlyForecast
           forecast={this.state.weatherData.forecast.hourly.intervals}
+        />
+        <DailyForecast
+          forecast={this.state.weatherData.forecast.daily.intervals}
         />
       </View>
     );
@@ -64,7 +76,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Cochin',
     fontSize: 25,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'black',
   },
   container: {
     flex: 1,

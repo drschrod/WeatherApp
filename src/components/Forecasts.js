@@ -5,42 +5,32 @@ import Temperature from './Temperature';
 import {formatHourlyTime} from '../helpers/time';
 
 const Item = ({data, index, currentHour}) => {
-  if (index <= 12) {
     return (
       <View style={styles.item}>
-        <Text>{formatHourlyTime(currentHour, index)}</Text>
+        <Text>{data.name}</Text>
         <Temperature
           temperature={data.temperature}
           temperatureUnit={data.temperatureUnit}
         />
       </View>
     );
-  }
-  return null;
-};
+  };
 
 const Separator = ({data, index, currentHour}) => {
   return <View style={styles.separator} />;
 };
 
-export default class HourlyForecast extends Component {
+export default class Forecasts extends Component {
   constructor(props) {
     super(props);
-    this.state = {currentHour: new Date().getHours().toLocaleString()};
-  }
-  componentDidMount() {
-    setInterval(() => {
-      this.setState({
-        currentHour: new Date().getHours(),
-      });
-    }, 60000);
+    this.state = {};
   }
 
   render() {
-    const {forecast} = this.props;
+    const {forecast, renderHorizontally} = this.props;
     return (
       <View>
-        <Text style={styles.title}>Hourly Forecast</Text>
+        <Text style={styles.title}>7 Day Forecast</Text>
         <FlatList
           data={forecast}
           renderItem={({item, index}) => (
@@ -51,8 +41,7 @@ export default class HourlyForecast extends Component {
             />
           )}
           keyExtractor={item => item.id}
-          horizontal={true}
-          ItemSeparatorComponent={Separator}
+          horizontal={renderHorizontally}
         />
       </View>
     );

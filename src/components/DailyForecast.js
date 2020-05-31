@@ -1,33 +1,26 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, SafeAreaView, SectionList} from 'react-native';
+import {StyleSheet, Text, View, SafeAreaView, FlatList} from 'react-native';
 import Constants from 'expo-constants';
+import Temperature from './Temperature';
+import {formatHourlyTime} from '../helpers/time';
 
-const DATA = [
-  {
-    title: 'Main dishes',
-    data: ['Pizza', 'Burger', 'Risotto'],
-  },
-  {
-    title: 'Sides',
-    data: ['French Fries', 'Onion Rings', 'Fried Shrimps'],
-  },
-  {
-    title: 'Drinks',
-    data: ['Water', 'Coke', 'Beer'],
-  },
-  {
-    title: 'Desserts',
-    data: ['Cheese Cake', 'Ice Cream'],
-  },
-];
+const Item = ({data, index, currentHour}) => {
+    return (
+      <View style={styles.item}>
+        <Text>{data.name}</Text>
+        <Temperature
+          temperature={data.temperature}
+          temperatureUnit={data.temperatureUnit}
+        />
+      </View>
+    );
+  };
 
-const Item = ({title}) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
+const Separator = ({data, index, currentHour}) => {
+  return <View style={styles.separator} />;
+};
 
-export default class HourlyForecast extends Component {
+export default class DailyForecast extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -35,16 +28,20 @@ export default class HourlyForecast extends Component {
 
   render() {
     const {forecast} = this.props;
-    console.log(forecast);
+    console.log(forecast)
     return (
       <View>
-        <SectionList
-          sections={DATA}
-          keyExtractor={(item, index) => item + index}
-          renderItem={({item}) => <Item title={item} />}
-          renderSectionHeader={({section: {title}}) => (
-            <Text style={styles.header}>{title}</Text>
+        <Text style={styles.title}>7 Day Forecast</Text>
+        <FlatList
+          data={forecast}
+          renderItem={({item, index}) => (
+            <Item
+              data={item}
+              index={index}
+              currentHour={this.state.currentHour}
+            />
           )}
+          keyExtractor={item => item.id}
         />
       </View>
     );
@@ -68,5 +65,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+  },
+  separator: {
+    height: '100%',
+    width: 2,
   },
 });

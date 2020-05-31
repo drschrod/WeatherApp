@@ -17,8 +17,6 @@ import {
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-
-import Temperature from './src/components/Temperature';
 import Weather from './src/components/Weather';
 
 const App: () => React$Node = () => {
