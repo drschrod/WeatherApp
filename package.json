@@ -13,10 +13,12 @@
   },
   "dependencies": {
     "@react-native-community/geolocation": "^2.0.2",
+    "expo-constants": "^9.0.0",
     "jest-fetch-mock": "^3.0.3",
     "pre-commit": "^1.2.2",
     "react": "16.11.0",
     "react-native": "0.62.2",
+    "react-native-unimodules": "^0.9.1",
     "react-native-webview": "^9.4.0"
   },
   "devDependencies": {
@@ -33,7 +35,10 @@
   "jest": {
     "preset": "react-native",
     "automock": false,
-    "testMatch": [ "**/__tests__/**/*.test.js?(x)", "**/?(*.)+(spec|test).[jt]s?(x)" ],
+    "testMatch": [
+      "**/__tests__/**/*.test.js?(x)",
+      "**/?(*.)+(spec|test).[jt]s?(x)"
+    ],
     "setupFiles": [
       "./setupJest.js"
     ]

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {ActivityIndicator, Text, StyleSheet, View} from 'react-native';
 
 import Temperature from './Temperature';
+import HourlyForecast from './HourlyForecast';
 import {
   getWeatherData,
   asyncGetCurrentPosition,
@@ -21,7 +22,7 @@ export default class Weather extends Component {
     if (this.state.loading) {
       return (
         <View style={[styles.container, styles.horizontal]}>
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="white" />
         </View>
       );
     }
@@ -41,14 +42,19 @@ export default class Weather extends Component {
     // Todo: gradient function for the temperature
     const textColor = temperature >= 80 ? 'red' : 'blue';
     return (
-      <Text style={styles.baseText}>
-        <Temperature
-          temperature={temperature}
-          temperatureUnit={temperatureUnit}
+      <View>
+        <Text style={styles.baseText}>
+          <Temperature
+            temperature={temperature}
+            temperatureUnit={temperatureUnit}
+          />
+          {/* Develop bag of words to determine UI based on short forecast? */}
+          <Text>{shortForecast}</Text>
+        </Text>
+        <HourlyForecast
+          forecast={this.state.weatherData.forecast.hourly.intervals}
         />
-        {/* Develop bag of words to determine UI based on short forecast? */}
-        <Text>{shortForecast}</Text>
-      </Text>
+      </View>
     );
   }
 }
