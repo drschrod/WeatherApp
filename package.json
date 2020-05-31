@@ -33,6 +33,7 @@
   "jest": {
     "preset": "react-native",
     "automock": false,
+    "testMatch": [ "**/__tests__/**/*.test.js?(x)", "**/?(*.)+(spec|test).[jt]s?(x)" ],
     "setupFiles": [
       "./setupJest.js"
     ]

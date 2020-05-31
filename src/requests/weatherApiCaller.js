@@ -58,4 +58,5 @@ const getWeatherData = async location => {
 module.exports = {
   asyncGetCurrentPosition,
   getWeatherData,
+  transformForecastData,
 };
