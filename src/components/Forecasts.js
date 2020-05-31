@@ -5,16 +5,16 @@ import Temperature from './Temperature';
 import {formatHourlyTime} from '../helpers/time';
 
 const Item = ({data, index, currentHour}) => {
-    return (
-      <View style={styles.item}>
-        <Text>{data.name}</Text>
-        <Temperature
-          temperature={data.temperature}
-          temperatureUnit={data.temperatureUnit}
-        />
-      </View>
-    );
-  };
+  return (
+    <View style={styles.item}>
+      <Text>{data.name}</Text>
+      <Temperature
+        temperature={data.temperature}
+        temperatureUnit={data.temperatureUnit}
+      />
+    </View>
+  );
+};
 
 const Separator = ({data, index, currentHour}) => {
   return <View style={styles.separator} />;

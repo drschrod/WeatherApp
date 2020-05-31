@@ -19,7 +19,7 @@ export default class Weather extends Component {
     asyncGetCurrentPosition()
       .then(location => getWeatherData(location))
       .then(weatherData => this.setState({weatherData, loading: false}));
-    
+
     setInterval(() => {
       this.setState({
         currentHour: new Date().getHours(),
