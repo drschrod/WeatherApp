@@ -28,6 +28,7 @@ const getWeatherData = async location => {
   )},${longitude.toFixed(coordAccuracy)}`;
   try {
     const baseData = await fetch(route);
+    console.log(baseData);
     const json = await baseData.json();
     const {city, state} = json.properties.relativeLocation.properties;
 
@@ -57,4 +58,5 @@ const getWeatherData = async location => {
 module.exports = {
   asyncGetCurrentPosition,
   getWeatherData,
+  transformForecastData,
 };

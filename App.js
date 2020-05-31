@@ -35,9 +35,8 @@ const App: () => React$Node = () => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-            <Weather></Weather>
+          <Weather />
         </ScrollView>
-        
       </SafeAreaView>
     </>
   );

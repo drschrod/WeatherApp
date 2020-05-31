@@ -1,12 +1,7 @@
 import Geolocation from '@react-native-community/geolocation';
 
-const baseUrl = "https://api.weather.gov/"
+const baseUrl = 'https://api.weather.gov/';
 
-const getColorTempGradient = () => {
-    
-}
+const getColorTempGradient = () => {};
 
-module.exports = {
-    asyncGetCurrentPosition,
-    getWeatherData
-}
+module.exports = {getColorTempGradient};
