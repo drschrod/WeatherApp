@@ -20,23 +20,23 @@ test('asyncGetCurrentPosition', async () => {
   });
 });
 
-describe.skip('transformForecastData', () => {
+describe('transformForecastData', () => {
   test('hourly', () => {
     const data = transformForecastData(hourly.properties);
     expect(data).toMatchObject({
-      updatedAt: data.updated,
-      units: data.units,
-      elevation: data.elevation,
-      forecast: data.periods,
+      updatedAt: hourly.properties.updated,
+      units: hourly.properties.units,
+      elevation: hourly.properties.elevation,
+      forecast: hourly.properties.periods,
     });
   });
   test('daily', () => {
     const data = transformForecastData(daily.properties);
     expect(data).toMatchObject({
-      updatedAt: data.updated,
-      units: data.units,
-      elevation: data.elevation,
-      forecast: data.periods,
+      updatedAt: daily.properties.updated,
+      units: daily.properties.units,
+      elevation: daily.properties.elevation,
+      forecast: daily.properties.periods,
     });
   });
 });
