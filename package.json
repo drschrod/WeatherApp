@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@react-native-community/geolocation": "^2.0.2",
+    "eslint-plugin-import": "^2.21.2",
     "expo-constants": "^9.0.0",
     "jest-fetch-mock": "^3.0.3",
     "pre-commit": "^1.2.2",

@@ -5,18 +5,15 @@ import Temperature from './Temperature';
 import {formatHourlyTime} from '../helpers/time';
 
 const Item = ({data, index, currentHour}) => {
-  if (index <= 12) {
-    return (
-      <View style={styles.item}>
-        <Text>{formatHourlyTime(currentHour, index)}</Text>
-        <Temperature
-          temperature={data.temperature}
-          temperatureUnit={data.temperatureUnit}
-        />
-      </View>
-    );
-  }
-  return null;
+  return (
+    <View style={styles.item}>
+      <Text style={styles.title}>{formatHourlyTime(currentHour, index)}</Text>
+      <Temperature
+        temperature={data.temperature}
+        temperatureUnit={data.temperatureUnit}
+      />
+    </View>
+  );
 };
 
 const Separator = ({data, index, currentHour}) => {
@@ -40,9 +37,9 @@ export default class HourlyForecast extends Component {
     const {forecast} = this.props;
     return (
       <View>
-        <Text style={styles.title}>Hourly Forecast</Text>
         <FlatList
-          data={forecast}
+          style={[{marginLeft: 4}]}
+          data={forecast.slice(0, 11)}
           renderItem={({item, index}) => (
             <Item
               data={item}
@@ -52,7 +49,6 @@ export default class HourlyForecast extends Component {
           )}
           keyExtractor={item => item.id}
           horizontal={true}
-          ItemSeparatorComponent={Separator}
         />
       </View>
     );
@@ -66,9 +62,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
+    backgroundColor: '#FFB385',
+    padding: 25,
     marginVertical: 8,
+    marginHorizontal: 4,
+    borderRadius: 10,
   },
   header: {
     fontSize: 32,
@@ -76,6 +74,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+    fontWeight: 'bold',
   },
   separator: {
     height: '100%',

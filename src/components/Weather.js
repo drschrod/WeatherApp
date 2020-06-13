@@ -9,7 +9,7 @@ import {
   getWeatherData,
   asyncGetCurrentPosition,
 } from '../requests/weatherApiCaller';
-
+import {styles} from '../asssets/styles';
 export default class Weather extends Component {
   constructor(props) {
     super(props);
@@ -50,15 +50,23 @@ export default class Weather extends Component {
     // Todo: gradient function for the temperature
     const textColor = temperature >= 80 ? 'red' : 'blue';
     return (
-      <View>
+      <View style={styles.view}>
         <Text style={styles.baseText}>
-          <Text>Currently</Text>
-          <Temperature
-            temperature={temperature}
-            temperatureUnit={temperatureUnit}
-          />
-          {/* Develop bag of words to determine UI based on short forecast? */}
-          <Text>{shortForecast}</Text>
+          <Text style={[{textAlign: 'left', paddingLeft: 20}]}>
+            {'\tCurrently\n'}
+          </Text>
+          <Text style={[{textAlign: 'center', paddingBottom: 20}]}>
+            <Temperature
+              temperature={temperature}
+              temperatureUnit={temperatureUnit}
+              color={'white'}
+              fontSize={60}
+            />
+            {/* Develop bag of words to determine UI based on short forecast? */}
+          </Text>
+          <Text style={[{textAlign: 'right', paddingRight: 20}]}>
+            {`\nand ${shortForecast}\t`}
+          </Text>
         </Text>
         <HourlyForecast
           forecast={this.state.weatherData.forecast.hourly.intervals}
@@ -71,20 +79,23 @@ export default class Weather extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  baseText: {
-    fontFamily: 'Cochin',
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  horizontal: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
-  },
-});
+// const styles = StyleSheet.create({
+//   view: {
+//     flex: 1,
+//   },
+//   baseText: {
+//     fontFamily: 'Cochin',
+//     fontSize: 25,
+//     fontWeight: 'bold',
+//     color: 'black',
+//   },
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//   },
+//   horizontal: {
+//     flexDirection: 'row',
+//     justifyContent: 'space-around',
+//     padding: 10,
+//   },
+// });
