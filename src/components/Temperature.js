@@ -8,11 +8,15 @@ export default class Temperature extends Component {
   }
 
   render() {
-    const {temperature, temperatureUnit} = this.props;
+    const {temperature, temperatureUnit, color, fontSize} = this.props;
     // Todo: gradient function for the temperature
     const textColor = {color: temperature >= 80 ? 'red' : 'blue'};
     return (
-      <Text style={[styles.temperatureText, textColor]}>
+      <Text
+        style={[
+          styles.temperatureText,
+          {color: color ? color : 'black', fontSize: fontSize ? fontSize : 50},
+        ]}>
         <Text style={styles.titleText} onPress={this.onPressTitle}>
           {`${temperature}° ${temperatureUnit}`}
         </Text>
@@ -23,9 +27,9 @@ export default class Temperature extends Component {
 
 const styles = StyleSheet.create({
   temperatureText: {
-    fontFamily: 'Cochin',
+    fontFamily: 'Avenir',
     fontSize: 50,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'black',
   },
 });

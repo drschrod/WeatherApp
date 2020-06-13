@@ -6,7 +6,7 @@ const transformForecastData = data => ({
   updatedAt: data.updated,
   units: data.units,
   elevation: data.elevation,
-  forecast: data.periods,
+  intervals: data.periods,
 });
 
 const getForecast = async route => {
@@ -28,7 +28,6 @@ const getWeatherData = async location => {
   )},${longitude.toFixed(coordAccuracy)}`;
   try {
     const baseData = await fetch(route);
-    console.log(baseData);
     const json = await baseData.json();
     const {city, state} = json.properties.relativeLocation.properties;
 
@@ -44,8 +43,8 @@ const getWeatherData = async location => {
         longitude,
       },
       forecast: {
-        current: hourlyForecast.forecast[0],
-        hourly: await getForecast(hourlyForecastRoute),
+        current: hourlyForecast.intervals[0],
+        hourly: hourlyForecast,
         daily: await getForecast(dailyForecastRoute),
       },
     };
