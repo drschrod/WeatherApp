@@ -4,10 +4,10 @@ import Constants from 'expo-constants';
 import Temperature from './Temperature';
 import {formatHourlyTime} from '../helpers/time';
 
-const Item = ({data, index, currentHour}) => {
+const Item = ({data, index, subText}) => {
   return (
     <View style={styles.item}>
-      <Text>{data.name}</Text>
+      <Text style={styles.title}>{subText}</Text>
       <Temperature
         temperature={data.temperature}
         temperatureUnit={data.temperatureUnit}
@@ -16,28 +16,39 @@ const Item = ({data, index, currentHour}) => {
   );
 };
 
-const Separator = ({data, index, currentHour}) => {
-  return <View style={styles.separator} />;
-};
-
-export default class Forecasts extends Component {
+export default class HourlyForecast extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {currentHour: new Date().getHours().toLocaleString()};
+  }
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({
+        currentHour: new Date().getHours(),
+      });
+    }, 60000);
   }
 
   render() {
-    const {forecast, renderHorizontally} = this.props;
+    const {
+      forecast,
+      forecastRange,
+      renderHorizontally,
+      currentHour,
+      renderHour,
+    } = this.props;
     return (
-      <View>
-        <Text style={styles.title}>7 Day Forecast</Text>
+      <View style={styles.view}>
         <FlatList
-          data={forecast}
+          style={[{marginLeft: 4}]}
+          data={forecast.slice(0, forecastRange)}
           renderItem={({item, index}) => (
             <Item
               data={item}
               index={index}
-              currentHour={this.state.currentHour}
+              subText={
+                renderHour ? formatHourlyTime(currentHour, index) : item.name
+              }
             />
           )}
           keyExtractor={item => item.id}
@@ -49,15 +60,20 @@ export default class Forecasts extends Component {
 }
 
 const styles = StyleSheet.create({
+  view: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     marginTop: Constants.statusBarHeight,
     marginHorizontal: 16,
   },
   item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
+    backgroundColor: '#FFB385',
+    padding: 25,
     marginVertical: 8,
+    marginHorizontal: 4,
+    borderRadius: 10,
   },
   header: {
     fontSize: 32,
@@ -65,6 +81,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+    fontWeight: 'bold',
   },
   separator: {
     height: '100%',

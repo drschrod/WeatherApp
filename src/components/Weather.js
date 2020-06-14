@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {ActivityIndicator, Text, StyleSheet, View} from 'react-native';
 
 import Temperature from './Temperature';
-import HourlyForecast from './HourlyForecast';
-import DailyForecast from './DailyForecast';
 import Forecasts from './Forecasts';
 import {
   getWeatherData,
@@ -13,7 +11,10 @@ import {styles} from '../asssets/styles';
 export default class Weather extends Component {
   constructor(props) {
     super(props);
-    this.state = {loading: true};
+    this.state = {
+      loading: true,
+      currentHour: new Date().getHours(),
+    };
   }
   componentDidMount() {
     asyncGetCurrentPosition()
@@ -68,34 +69,21 @@ export default class Weather extends Component {
             {`\nand ${shortForecast}\t`}
           </Text>
         </Text>
-        <HourlyForecast
+        {/* Hourly Forecast */}
+        <Forecasts
           forecast={this.state.weatherData.forecast.hourly.intervals}
+          forecastRange={11}
+          renderHorizontally={true}
+          renderHour={true}
+          currentHour={this.state.currentHour}
         />
-        <DailyForecast
+        {/* Daily Forecast */}
+        <Forecasts
           forecast={this.state.weatherData.forecast.daily.intervals}
+          forecastRange={7}
+          renderHorizontally={true}
         />
       </View>
     );
   }
 }
-
-// const styles = StyleSheet.create({
-//   view: {
-//     flex: 1,
-//   },
-//   baseText: {
-//     fontFamily: 'Cochin',
-//     fontSize: 25,
-//     fontWeight: 'bold',
-//     color: 'black',
-//   },
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//   },
-//   horizontal: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-around',
-//     padding: 10,
-//   },
-// });
