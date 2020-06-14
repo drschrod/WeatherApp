@@ -19,14 +19,6 @@ const Item = ({data, index, subText}) => {
 export default class HourlyForecast extends Component {
   constructor(props) {
     super(props);
-    this.state = {currentHour: new Date().getHours().toLocaleString()};
-  }
-  componentDidMount() {
-    setInterval(() => {
-      this.setState({
-        currentHour: new Date().getHours(),
-      });
-    }, 60000);
   }
 
   render() {
