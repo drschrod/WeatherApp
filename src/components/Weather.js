@@ -2,18 +2,19 @@ import React, {Component} from 'react';
 import {ActivityIndicator, Text, StyleSheet, View} from 'react-native';
 
 import Temperature from './Temperature';
-import HourlyForecast from './HourlyForecast';
-import DailyForecast from './DailyForecast';
 import Forecasts from './Forecasts';
 import {
   getWeatherData,
   asyncGetCurrentPosition,
 } from '../requests/weatherApiCaller';
-import {styles} from '../asssets/styles';
+import {weatherStyles} from '../asssets/styles';
 export default class Weather extends Component {
   constructor(props) {
     super(props);
-    this.state = {loading: true};
+    this.state = {
+      loading: true,
+      currentHour: new Date().getHours(),
+    };
   }
   componentDidMount() {
     asyncGetCurrentPosition()
@@ -29,7 +30,7 @@ export default class Weather extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <View style={[styles.container, styles.horizontal]}>
+        <View style={[weatherStyles.container, weatherStyles.horizontal]}>
           <ActivityIndicator size="large" color="white" />
         </View>
       );
@@ -50,8 +51,8 @@ export default class Weather extends Component {
     // Todo: gradient function for the temperature
     const textColor = temperature >= 80 ? 'red' : 'blue';
     return (
-      <View style={styles.view}>
-        <Text style={styles.baseText}>
+      <View style={weatherStyles.view}>
+        <Text style={weatherStyles.text}>
           <Text style={[{textAlign: 'left', paddingLeft: 20}]}>
             {'\tCurrently\n'}
           </Text>
@@ -68,34 +69,21 @@ export default class Weather extends Component {
             {`\nand ${shortForecast}\t`}
           </Text>
         </Text>
-        <HourlyForecast
+        {/* Hourly Forecast */}
+        <Forecasts
           forecast={this.state.weatherData.forecast.hourly.intervals}
+          forecastRange={11}
+          renderHorizontally={true}
+          renderHour={true}
+          currentHour={this.state.currentHour}
         />
-        <DailyForecast
+        {/* Daily Forecast */}
+        <Forecasts
           forecast={this.state.weatherData.forecast.daily.intervals}
+          forecastRange={7}
+          renderHorizontally={true}
         />
       </View>
     );
   }
 }
-
-// const styles = StyleSheet.create({
-//   view: {
-//     flex: 1,
-//   },
-//   baseText: {
-//     fontFamily: 'Cochin',
-//     fontSize: 25,
-//     fontWeight: 'bold',
-//     color: 'black',
-//   },
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//   },
-//   horizontal: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-around',
-//     padding: 10,
-//   },
-// });
