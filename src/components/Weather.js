@@ -7,7 +7,7 @@ import {
   getWeatherData,
   asyncGetCurrentPosition,
 } from '../requests/weatherApiCaller';
-import {styles} from '../asssets/styles';
+import {weatherStyles} from '../asssets/styles';
 export default class Weather extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +30,7 @@ export default class Weather extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <View style={[styles.container, styles.horizontal]}>
+        <View style={[weatherStyles.container, weatherStyles.horizontal]}>
           <ActivityIndicator size="large" color="white" />
         </View>
       );
@@ -51,8 +51,8 @@ export default class Weather extends Component {
     // Todo: gradient function for the temperature
     const textColor = temperature >= 80 ? 'red' : 'blue';
     return (
-      <View style={styles.view}>
-        <Text style={styles.baseText}>
+      <View style={weatherStyles.view}>
+        <Text style={weatherStyles.text}>
           <Text style={[{textAlign: 'left', paddingLeft: 20}]}>
             {'\tCurrently\n'}
           </Text>

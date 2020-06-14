@@ -6,24 +6,52 @@ Colors for UI
 https://coolors.co/1a936f-88d498-c6dabf-ffb385-495b7c
 https://coolors.co/5aa9e6-7fc8f8-cc92c2-ffb385-495b7c
 */
+const baseTextStyles = {
+  fontFamily: 'Avenir',
+  fontSize: 25,
+  fontWeight: 'bold',
+  textAlign: 'center',
+  color: 'white',
+};
+
+const sharedStyles = {
+  safeAreaView: {
+    flex: 1,
+    backgroundColor: '#495B7C',
+  },
+  view: {
+    flex: 1,
+  },
+};
 
 module.exports = {
-  styles: StyleSheet.create({
-    weather: {
-      fontFamily: 'Avenir',
-      fontSize: 25,
+  weatherStyles: StyleSheet.create({
+    ...sharedStyles,
+    text: {
+      ...baseTextStyles,
+      color: 'white',
+    },
+  }),
+  forecastStyles: StyleSheet.create({
+    ...sharedStyles,
+    item: {
+      backgroundColor: '#FFB385',
+      padding: 25,
+      marginVertical: 8,
+      marginHorizontal: 4,
+      borderRadius: 10,
+    },
+    title: {
+      fontSize: 24,
       fontWeight: 'bold',
-      color: 'black',
     },
-    // hourlyForecast: {
-
-    // },
-    // dailyForecast: {
-
-    // },
-    view: {
-      flex: 1,
+    text: {
+      ...baseTextStyles,
+      color: 'white',
     },
+  }),
+  styles: StyleSheet.create({
+    ...sharedStyles,
     baseText: {
       fontFamily: 'Avenir',
       fontSize: 25,
@@ -38,10 +66,6 @@ module.exports = {
       flexDirection: 'row',
       justifyContent: 'space-around',
       padding: 10,
-    },
-    safeAreaView: {
-      flex: 1,
-      backgroundColor: '#495B7C',
     },
     scrollView: {
       backgroundColor: 'black',

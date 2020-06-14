@@ -3,11 +3,12 @@ import {StyleSheet, Text, View, SafeAreaView, FlatList} from 'react-native';
 import Constants from 'expo-constants';
 import Temperature from './Temperature';
 import {formatHourlyTime} from '../helpers/time';
+import {forecastStyles} from '../asssets/styles';
 
 const Item = ({data, index, subText}) => {
   return (
-    <View style={styles.item}>
-      <Text style={styles.title}>{subText}</Text>
+    <View style={forecastStyles.item}>
+      <Text style={forecastStyles.title}>{subText}</Text>
       <Temperature
         temperature={data.temperature}
         temperatureUnit={data.temperatureUnit}
@@ -30,7 +31,7 @@ export default class HourlyForecast extends Component {
       renderHour,
     } = this.props;
     return (
-      <View style={styles.view}>
+      <View style={forecastStyles.view}>
         <FlatList
           style={[{marginLeft: 4}]}
           data={forecast.slice(0, forecastRange)}
@@ -43,40 +44,10 @@ export default class HourlyForecast extends Component {
               }
             />
           )}
-          keyExtractor={item => item.id}
+          keyExtractor={item => `${item.number}`}
           horizontal={renderHorizontally}
         />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    marginTop: Constants.statusBarHeight,
-    marginHorizontal: 16,
-  },
-  item: {
-    backgroundColor: '#FFB385',
-    padding: 25,
-    marginVertical: 8,
-    marginHorizontal: 4,
-    borderRadius: 10,
-  },
-  header: {
-    fontSize: 32,
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  separator: {
-    height: '100%',
-    width: 2,
-  },
-});
