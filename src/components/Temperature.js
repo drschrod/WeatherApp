@@ -10,7 +10,7 @@ export default class Temperature extends Component {
   render() {
     const {temperature, temperatureUnit, color, fontSize} = this.props;
     // Todo: gradient function for the temperature
-    const textColor = {color: temperature >= 80 ? 'red' : 'blue'};
+    //const textColor = {color: getColorTempGradient(temperature)};
     return (
       <Text
         style={[
