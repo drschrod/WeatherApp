@@ -2,32 +2,32 @@ import Geolocation from '@react-native-community/geolocation';
 
 const baseUrl = 'https://api.weather.gov/';
 
+const colorMapper = {
+  subZero: '#00FFFF', //ice blue
+  freezing: '#00CCFF', //blue
+  chilly: '#009999', //teal
+  comfortable: '#FFFF66', //yellow
+  warm: '#FFCC66', //orange
+  hot: '#FF9966', // red orange
+  holyShitItsHot: '#FF6666', // red
+};
+
 const getColorTempGradient = temperature => {
-  var textColor = '';
-
-  //cools
   if (temperature < 0) {
-    textColor = '#00FFFF'; //ice blue
-  } else if (temperature > 0 < 20) {
-    textColor = '#00CCFF'; //less icy blue?
-  } else if (temperature > 21 < 32) {
-    textColor = '#0099FF'; // blue??
-  } else if (temperature > 33 < 55) {
-    textColor = '#009999'; //teal
-  }
-
-  //warms
-  else if (temperature > 56 < 75) {
-    textColor = '#FFFF66'; //yellow
-  } else if (temperature > 76 < 85) {
-    textColor = '#FFCC66'; //orange
-  } else if (temperature > 86 < 100) {
-    textColor = '#FF9966'; // red orange??
+    return colorMapper.subZero;
+  } else if (temperature < 32) {
+    return colorMapper.freezing;
+  } else if (temperature < 55) {
+    return colorMapper.chilly;
+  } else if (temperature < 75) {
+    return colorMapper.comfortable;
+  } else if (temperature < 85) {
+    return colorMapper.warm;
+  } else if (temperature < 100) {
+    return colorMapper.hot;
   } else {
-    textColor = '#FF6666'; // red
+    return colorMapper.holyShitItsHot;
   }
-
-  return textColor;
 };
 
 module.exports = {
