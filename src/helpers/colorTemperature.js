@@ -9,7 +9,7 @@ const getColorTempGradient = temperature => {
   if (temperature < 0) {
     textColor = '#00FFFF'; //ice blue
   } else if (temperature > 0 < 20) {
-    textColor = '#00CCFF'; //less icy blue? 
+    textColor = '#00CCFF'; //less icy blue?
   } else if (temperature > 21 < 32) {
     textColor = '#0099FF'; // blue??
   } else if (temperature > 33 < 55) {
@@ -22,7 +22,7 @@ const getColorTempGradient = temperature => {
   } else if (temperature > 76 < 85) {
     textColor = '#FFCC66'; //orange
   } else if (temperature > 86 < 100) {
-    textColor = '#FF9966'; // red orange?? 
+    textColor = '#FF9966'; // red orange??
   } else {
     textColor = '#FF6666'; // red
   }
