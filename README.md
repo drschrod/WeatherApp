@@ -2,6 +2,20 @@
 
 ## How to setup
 
+### Mac
+1. Install brew
+    `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"`
+2. Install cocoapods via brew
+    `brew install cocoapods`
+3. Install xcode command line tools
+4. Run initial setup
+    ``` bash
+    # From the root project directory...
+    make initial-setup
+    ```
+
+### Windows
+_WIP_
 ``` bash
 # From the root project directory...
 make initial-setup
