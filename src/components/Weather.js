@@ -19,7 +19,8 @@ export default class Weather extends Component {
   componentDidMount() {
     asyncGetCurrentPosition()
       .then(location => getWeatherData(location))
-      .then(weatherData => this.setState({weatherData, loading: false}));
+      .then(weatherData => this.setState({weatherData, loading: false}))
+      .catch(error => this.setState({error, loading: false}));
 
     setInterval(() => {
       this.setState({
@@ -32,6 +33,13 @@ export default class Weather extends Component {
       return (
         <View style={[weatherStyles.container, weatherStyles.horizontal]}>
           <ActivityIndicator size="large" color="white" />
+        </View>
+      );
+    }
+    if (this.state.error) {
+      return (
+        <View style={weatherStyles.text}>
+          <Text>{this.state.error.message}</Text>
         </View>
       );
     }
