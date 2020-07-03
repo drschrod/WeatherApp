@@ -16,8 +16,8 @@ import {
   StatusBar,
 } from 'react-native';
 
-import {styles} from './src/asssets/styles';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import { styles } from './src/asssets/styles';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Weather from './src/components/Weather';
 
 const App: () => React$Node = () => {

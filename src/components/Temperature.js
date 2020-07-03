@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Text, StyleSheet} from 'react-native';
+import React, { Component } from 'react';
+import { Text, StyleSheet } from 'react-native';
 
 export default class Temperature extends Component {
   constructor(props) {
@@ -8,12 +8,15 @@ export default class Temperature extends Component {
   }
 
   render() {
-    const {temperature, temperatureUnit, color, fontSize} = this.props;
+    const { temperature, temperatureUnit, color, fontSize } = this.props;
     return (
       <Text
         style={[
           styles.temperatureText,
-          {color: color ? color : 'black', fontSize: fontSize ? fontSize : 50},
+          {
+            color: color ? color : 'black',
+            fontSize: fontSize ? fontSize : 50,
+          },
         ]}>
         <Text style={styles.titleText} onPress={this.onPressTitle}>
           {`${temperature}° ${temperatureUnit}`}

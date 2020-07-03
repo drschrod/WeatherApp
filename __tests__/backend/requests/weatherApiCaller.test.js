@@ -8,7 +8,7 @@ import {
   transformForecastData,
 } from '../../../src/requests/weatherApiCaller';
 
-import {hourly, daily} from './weatherApiTestData';
+import { hourly, daily } from './weatherApiTestData';
 
 test('asyncGetCurrentPosition', async () => {
   const location = await asyncGetCurrentPosition();
