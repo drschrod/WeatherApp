@@ -21,7 +21,7 @@ const asyncGetCurrentPosition = (options = {}) =>
   });
 
 const getWeatherData = async location => {
-  const {longitude, latitude} = location.coords;
+  const { longitude, latitude } = location.coords;
   const coordAccuracy = 4;
   const route = `${baseUrl}points/${latitude.toFixed(
     coordAccuracy,
@@ -29,7 +29,7 @@ const getWeatherData = async location => {
   try {
     const baseData = await fetch(route);
     const json = await baseData.json();
-    const {city, state} = json.properties.relativeLocation.properties;
+    const { city, state } = json.properties.relativeLocation.properties;
 
     const hourlyForecastRoute = json.properties.forecastHourly;
     const dailyForecastRoute = json.properties.forecast;

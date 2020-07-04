@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {ActivityIndicator, Text, StyleSheet, View} from 'react-native';
+import React, { Component } from 'react';
+import { ActivityIndicator, Text, StyleSheet, View } from 'react-native';
 
 import Temperature from './Temperature';
 import Forecasts from './Forecasts';
@@ -7,7 +7,7 @@ import {
   getWeatherData,
   asyncGetCurrentPosition,
 } from '../requests/weatherApiCaller';
-import {weatherStyles} from '../asssets/styles';
+import { weatherStyles } from '../asssets/styles';
 export default class Weather extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +19,8 @@ export default class Weather extends Component {
   componentDidMount() {
     asyncGetCurrentPosition()
       .then(location => getWeatherData(location))
-      .then(weatherData => this.setState({weatherData, loading: false}));
+      .then(weatherData => this.setState({ weatherData, loading: false }))
+      .catch(error => this.setState({ error, loading: false }));
 
     setInterval(() => {
       this.setState({
@@ -32,6 +33,13 @@ export default class Weather extends Component {
       return (
         <View style={[weatherStyles.container, weatherStyles.horizontal]}>
           <ActivityIndicator size="large" color="white" />
+        </View>
+      );
+    }
+    if (this.state.error) {
+      return (
+        <View style={weatherStyles.text}>
+          <Text>{this.state.error.message}</Text>
         </View>
       );
     }
@@ -53,10 +61,10 @@ export default class Weather extends Component {
     return (
       <View style={weatherStyles.view}>
         <Text style={weatherStyles.text}>
-          <Text style={[{textAlign: 'left', paddingLeft: 20}]}>
+          <Text style={[{ textAlign: 'left', paddingLeft: 20 }]}>
             {'\tCurrently\n'}
           </Text>
-          <Text style={[{textAlign: 'center', paddingBottom: 20}]}>
+          <Text style={[{ textAlign: 'center', paddingBottom: 20 }]}>
             <Temperature
               temperature={temperature}
               temperatureUnit={temperatureUnit}
@@ -65,7 +73,7 @@ export default class Weather extends Component {
             />
             {/* Develop bag of words to determine UI based on short forecast? */}
           </Text>
-          <Text style={[{textAlign: 'right', paddingRight: 20}]}>
+          <Text style={[{ textAlign: 'right', paddingRight: 20 }]}>
             {`\nand ${shortForecast}\t`}
           </Text>
         </Text>

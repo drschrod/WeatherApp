@@ -1,13 +1,21 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View, SafeAreaView, FlatList} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, SafeAreaView, FlatList } from 'react-native';
 import Constants from 'expo-constants';
 import Temperature from './Temperature';
-import {formatHourlyTime} from '../helpers/time';
-import {forecastStyles} from '../asssets/styles';
+import { getColorTempGradient } from '../helpers/colorTemperature';
+import { formatHourlyTime } from '../helpers/time';
+import { forecastStyles } from '../asssets/styles';
 
-const Item = ({data, index, subText}) => {
+const Item = ({ data, index, subText }) => {
+  const colorTemperatureStyle = StyleSheet.create({
+    style: { backgroundColor: getColorTempGradient(data.temperature) },
+  });
   return (
-    <View style={forecastStyles.item}>
+    <View
+      style={StyleSheet.compose(
+        forecastStyles.item,
+        colorTemperatureStyle.style,
+      )}>
       <Text style={forecastStyles.title}>{subText}</Text>
       <Temperature
         temperature={data.temperature}
@@ -30,12 +38,13 @@ export default class HourlyForecast extends Component {
       currentHour,
       renderHour,
     } = this.props;
+
     return (
       <View style={forecastStyles.view}>
         <FlatList
-          style={[{marginLeft: 4}]}
+          style={[{ marginLeft: 4 }]}
           data={forecast.slice(0, forecastRange)}
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <Item
               data={item}
               index={index}
