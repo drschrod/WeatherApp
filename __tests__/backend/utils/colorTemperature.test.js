@@ -9,15 +9,15 @@ import { getColorTempGradient } from '../../../src/helpers/colorTemperature';
 import renderer from 'react-test-renderer';
 
 const testTemperatures = [
-  { testTemperature: -45, expectedHexColor: '#00FFFF' },
+  { testTemperature: -45, expectedHexColor: '#a1ffff' },
   { testTemperature: 12, expectedHexColor: '#00CCFF' },
-  { testTemperature: 33, expectedHexColor: '#009999' },
-  { testTemperature: 56, expectedHexColor: '#FFFF66' },
+  { testTemperature: 33, expectedHexColor: '#00CCFF' },
+  { testTemperature: 56, expectedHexColor: '#FFCC66' },
   { testTemperature: 78, expectedHexColor: '#FFCC66' },
   { testTemperature: 89, expectedHexColor: '#FF9966' },
   { testTemperature: 96, expectedHexColor: '#FF9966' },
-  { testTemperature: 100, expectedHexColor: '#FF6666' },
-  { testTemperature: 115, expectedHexColor: '#FF6666' },
+  { testTemperature: 100, expectedHexColor: '#FF9966' },
+  { testTemperature: 115, expectedHexColor: '#FF9966' },
 ];
 
 describe.each(testTemperatures)(
