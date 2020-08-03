@@ -27,10 +27,9 @@ const App: () => React$Node = () => {
     <>
       <StatusBar barStyle="light-content" />
       <SafeAreaView style={styles.safeAreaView}>
-          <ImageBackground source={nightBkg} style={imageBackground}>
-            <Weather />
-          </ImageBackground>
-        
+        <ImageBackground source={nightBkg} style={imageBackground}>
+          <Weather />
+        </ImageBackground>
       </SafeAreaView>
     </>
   );

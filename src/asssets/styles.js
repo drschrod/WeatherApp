@@ -27,8 +27,8 @@ const sharedStyles = {
 module.exports = {
   imageBackground: {
     flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center"
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
   weatherStyles: StyleSheet.create({
     ...sharedStyles,
@@ -45,20 +45,19 @@ module.exports = {
       marginVertical: 8,
       marginHorizontal: 4,
       borderRadius: 10,
-      opacity: 0.60,
+      opacity: 0.6,
     },
     title: {
       ...baseTextStyles,
       fontSize: 24,
       fontWeight: 'bold',
       color: 'white',
-      opacity: 1
+      opacity: 1,
     },
     text: {
       ...baseTextStyles,
       color: 'white',
-      opacity: 1
-
+      opacity: 1,
     },
   }),
   styles: StyleSheet.create({

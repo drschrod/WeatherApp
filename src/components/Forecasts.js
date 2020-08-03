@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, FlatList, useWindowDimensions, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  FlatList,
+  useWindowDimensions,
+  Dimensions,
+} from 'react-native';
 import Constants from 'expo-constants';
 import Temperature from './Temperature';
 import { getColorTempGradient } from '../helpers/colorTemperature';
@@ -23,7 +31,7 @@ const getIconFromForecast = ({ shortForecast, isDaytime }) => {
     return forecastIconMapper(shortForecast, 'weather-sunny');
   }
   return forecastIconMapper(shortForecast, 'weather-night');
-}
+};
 
 const Item = ({ data, index, subText }) => {
   const currentForecastStyle = {
@@ -32,18 +40,28 @@ const Item = ({ data, index, subText }) => {
   };
   // data.shortForecast
   const WeatherIcon = (
-    <Icon name={getIconFromForecast(data)} size={60} color={getColorTempGradient(data.temperature)} />
+    <Icon
+      name={getIconFromForecast(data)}
+      size={60}
+      color={getColorTempGradient(data.temperature)}
+    />
   );
 
   return (
-    <View
-      style={index === 0 ? currentForecastStyle : forecastStyles.item}>
-      <Text style={forecastStyles.title}>{subText}{WeatherIcon}</Text>
+    <View style={index === 0 ? currentForecastStyle : forecastStyles.item}>
+      <Text style={forecastStyles.title}>
+        {subText}
+        {WeatherIcon}
+      </Text>
       <Temperature
         temperature={data.temperature}
         temperatureUnit={data.temperatureUnit}
       />
-      {index === 0 ? <Text style={forecastStyles.title}>{`\nand ${data.shortForecast}\t`}</Text> : null}
+      {index === 0 ? (
+        <Text style={forecastStyles.title}>{`\nand ${
+          data.shortForecast
+        }\t`}</Text>
+      ) : null}
     </View>
   );
 };

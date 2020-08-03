@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, Text, StyleSheet, View, ImageBackground } from 'react-native';
+import {
+  ActivityIndicator,
+  Text,
+  StyleSheet,
+  View,
+  ImageBackground,
+} from 'react-native';
 
 import Temperature from './Temperature';
 import Forecasts from './Forecasts';
