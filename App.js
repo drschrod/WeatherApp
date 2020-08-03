@@ -14,18 +14,23 @@ import {
   View,
   Text,
   StatusBar,
+  ImageBackground,
 } from 'react-native';
+import nightBkg from './src/asssets/nightsky.jpg';
 
-import { styles } from './src/asssets/styles';
+import { styles, imageBackground } from './src/asssets/styles';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Weather from './src/components/Weather';
 
 const App: () => React$Node = () => {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="light-content" />
       <SafeAreaView style={styles.safeAreaView}>
-        <Weather />
+          <ImageBackground source={nightBkg} style={imageBackground}>
+            <Weather />
+          </ImageBackground>
+        
       </SafeAreaView>
     </>
   );

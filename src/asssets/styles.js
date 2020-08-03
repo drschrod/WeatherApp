@@ -25,6 +25,11 @@ const sharedStyles = {
 };
 
 module.exports = {
+  imageBackground: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center"
+  },
   weatherStyles: StyleSheet.create({
     ...sharedStyles,
     text: {
@@ -35,19 +40,25 @@ module.exports = {
   forecastStyles: StyleSheet.create({
     ...sharedStyles,
     item: {
-      backgroundColor: '#FFB385',
+      backgroundColor: '#36454f',
       padding: 25,
       marginVertical: 8,
       marginHorizontal: 4,
       borderRadius: 10,
+      opacity: 0.60,
     },
     title: {
+      ...baseTextStyles,
       fontSize: 24,
       fontWeight: 'bold',
+      color: 'white',
+      opacity: 1
     },
     text: {
       ...baseTextStyles,
       color: 'white',
+      opacity: 1
+
     },
   }),
   styles: StyleSheet.create({

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, Text, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Text, StyleSheet, View, ImageBackground } from 'react-native';
 
 import Temperature from './Temperature';
 import Forecasts from './Forecasts';
@@ -7,7 +7,7 @@ import {
   getWeatherData,
   asyncGetCurrentPosition,
 } from '../requests/weatherApiCaller';
-import { weatherStyles } from '../asssets/styles';
+import { weatherStyles, imageBackground } from '../asssets/styles';
 export default class Weather extends Component {
   constructor(props) {
     super(props);
@@ -61,9 +61,6 @@ export default class Weather extends Component {
     return (
       <View style={weatherStyles.view}>
         <Text style={weatherStyles.text}>
-          <Text style={[{ textAlign: 'left', paddingLeft: 20 }]}>
-            {'\tCurrently\n'}
-          </Text>
           <Text style={[{ textAlign: 'center', paddingBottom: 20 }]}>
             <Temperature
               temperature={temperature}
@@ -71,10 +68,8 @@ export default class Weather extends Component {
               color={'white'}
               fontSize={60}
             />
-            {/* Develop bag of words to determine UI based on short forecast? */}
-          </Text>
-          <Text style={[{ textAlign: 'right', paddingRight: 20 }]}>
             {`\nand ${shortForecast}\t`}
+            {/* Develop bag of words to determine UI based on short forecast? */}
           </Text>
         </Text>
         {/* Hourly Forecast */}
@@ -89,7 +84,7 @@ export default class Weather extends Component {
         <Forecasts
           forecast={this.state.weatherData.forecast.daily.intervals}
           forecastRange={7}
-          renderHorizontally={true}
+          renderHorizontally={false}
         />
       </View>
     );

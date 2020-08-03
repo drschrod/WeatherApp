@@ -9,18 +9,10 @@ export default class Temperature extends Component {
 
   render() {
     const { temperature, temperatureUnit, color, fontSize } = this.props;
+
     return (
-      <Text
-        style={[
-          styles.temperatureText,
-          {
-            color: color ? color : 'black',
-            fontSize: fontSize ? fontSize : 50,
-          },
-        ]}>
-        <Text style={styles.titleText} onPress={this.onPressTitle}>
-          {`${temperature}° ${temperatureUnit}`}
-        </Text>
+      <Text style={styles.temperatureText}>
+        {`${temperature}° ${temperatureUnit}`}
       </Text>
     );
   }
@@ -31,6 +23,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir',
     fontSize: 50,
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
   },
 });
