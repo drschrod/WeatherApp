@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 /*
@@ -16,11 +16,21 @@ const baseTextStyles = {
 
 const sharedStyles = {
   safeAreaView: {
-    flex: 1,
-    backgroundColor: '#495B7C',
+    opacity: 0,
   },
   view: {
     flex: 1,
+  },
+  scrollView: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  container: {
+    justifyContent: 'space-around',
+    flexDirection: 'column',
+    alignItems: 'center',
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
   },
 };
 
@@ -29,35 +39,40 @@ module.exports = {
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
+    overflow: 'hidden',
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
   },
   weatherStyles: StyleSheet.create({
     ...sharedStyles,
     text: {
       ...baseTextStyles,
-      color: 'white',
     },
   }),
   forecastStyles: StyleSheet.create({
     ...sharedStyles,
     item: {
-      backgroundColor: '#36454f',
-      padding: 25,
-      marginVertical: 8,
-      marginHorizontal: 4,
-      borderRadius: 10,
-      opacity: 0.6,
+      justifyContent: 'space-around',
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: Dimensions.get('window').width,
     },
     title: {
       ...baseTextStyles,
-      fontSize: 24,
+      fontSize: 50,
       fontWeight: 'bold',
-      color: 'white',
       opacity: 1,
     },
     text: {
       ...baseTextStyles,
-      color: 'white',
       opacity: 1,
+    },
+  }),
+  currentForecastStyles: StyleSheet.create({
+    ...sharedStyles,
+    text: {
+      ...baseTextStyles,
+      fontSize: 50,
     },
   }),
   styles: StyleSheet.create({

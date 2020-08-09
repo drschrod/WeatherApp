@@ -5,10 +5,15 @@ import {
   StyleSheet,
   View,
   ImageBackground,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 
 import Temperature from './Temperature';
 import Forecasts from './Forecasts';
+import DailyForecast from './DailyForecast';
+import HourlyForecast from './HourlyForecast';
+import CurrentForecast from './CurrentForecast';
 import {
   getWeatherData,
   asyncGetCurrentPosition,
@@ -17,9 +22,12 @@ import { weatherStyles, imageBackground } from '../asssets/styles';
 export default class Weather extends Component {
   constructor(props) {
     super(props);
+    const screenHeight = Dimensions.get('screen').height;
     this.state = {
       loading: true,
       currentHour: new Date().getHours(),
+      pageHeight: screenHeight * 0.9,
+      windowDimensions: Dimensions.get('screen'),
     };
   }
   componentDidMount() {
@@ -38,7 +46,7 @@ export default class Weather extends Component {
     if (this.state.loading) {
       return (
         <View style={[weatherStyles.container, weatherStyles.horizontal]}>
-          <ActivityIndicator size="large" color="white" />
+          <ActivityIndicator size='large' color='white' />
         </View>
       );
     }
@@ -63,35 +71,45 @@ export default class Weather extends Component {
       detailedForecast,
     } = this.state.weatherData.forecast.current;
     // Todo: gradient function for the temperature
+
     const textColor = temperature >= 80 ? 'red' : 'blue';
     return (
       <View style={weatherStyles.view}>
-        <Text style={weatherStyles.text}>
-          <Text style={[{ textAlign: 'center', paddingBottom: 20 }]}>
-            <Temperature
-              temperature={temperature}
-              temperatureUnit={temperatureUnit}
-              color={'white'}
-              fontSize={60}
-            />
-            {`\nand ${shortForecast}\t`}
-            {/* Develop bag of words to determine UI based on short forecast? */}
-          </Text>
-        </Text>
-        {/* Hourly Forecast */}
-        <Forecasts
-          forecast={this.state.weatherData.forecast.hourly.intervals}
-          forecastRange={11}
-          renderHorizontally={true}
-          renderHour={true}
-          currentHour={this.state.currentHour}
-        />
-        {/* Daily Forecast */}
-        <Forecasts
-          forecast={this.state.weatherData.forecast.daily.intervals}
-          forecastRange={7}
-          renderHorizontally={false}
-        />
+        <ScrollView
+          style={weatherStyles.scrollView}
+          decelerationRate={'fast'}
+          pagingEnabled={true}
+          scrollToOverflowEnabled={true}
+          snapToInterval={this.state.pageHeight}
+          snapToAlignment={'center'}
+        >
+          <CurrentForecast
+            height={this.state.pageHeight}
+            temperature={temperature}
+            unit={temperatureUnit}
+            shortForecast={shortForecast}
+            isDaytime={isDaytime}
+          />
+          {/* Hourly Forecast */}
+          <HourlyForecast
+            forecast={this.state.weatherData.forecast.hourly.intervals}
+            forecastRange={11}
+            renderHorizontally={true}
+            renderHour={true}
+            currentHour={this.state.currentHour}
+            screenHeight={this.state.pageHeight}
+            screenWidth={this.state.windowDimensions.width}
+          />
+          {/* Daily Forecast */}
+          <DailyForecast
+            forecast={this.state.weatherData.forecast.daily.intervals}
+            forecastRange={7}
+            renderHorizontally={true}
+            screenHeight={this.state.pageHeight}
+            screenWidth={this.state.windowDimensions.width}
+            isDailyForecast={true}
+          />
+        </ScrollView>
       </View>
     );
   }

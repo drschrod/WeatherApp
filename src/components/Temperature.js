@@ -11,7 +11,7 @@ export default class Temperature extends Component {
     const { temperature, temperatureUnit, color, fontSize } = this.props;
 
     return (
-      <Text style={styles.temperatureText}>
+      <Text style={{ ...styles.temperatureText, fontSize }}>
         {`${temperature}° ${temperatureUnit}`}
       </Text>
     );

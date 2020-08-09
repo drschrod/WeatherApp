@@ -25,12 +25,12 @@ import Weather from './src/components/Weather';
 const App: () => React$Node = () => {
   return (
     <>
-      <StatusBar barStyle="light-content" />
-      <SafeAreaView style={styles.safeAreaView}>
-        <ImageBackground source={nightBkg} style={imageBackground}>
-          <Weather />
-        </ImageBackground>
-      </SafeAreaView>
+      <ImageBackground source={nightBkg} style={imageBackground}>
+        <SafeAreaView style={styles.safeAreaView} />
+        <StatusBar style={{ opacity: 1 }} barStyle='light-content' />
+        <Weather />
+        <SafeAreaView style={styles.safeAreaView} />
+      </ImageBackground>
     </>
   );
 };

@@ -9,8 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import Constants from 'expo-constants';
-import Temperature from './Temperature';
-import WeatherIcon from './WeatherIcon';
+import ForecastBlock from './ForecastBlock';
 
 import { formatHourlyTime } from '../helpers/time';
 import { forecastStyles } from '../asssets/styles';
@@ -26,31 +25,7 @@ const TimeSlot = ({ data, index, subText, screenHeight, screenWidth }) => (
   </View>
 );
 
-const ForecastBlock = ({ data, index, subText, screenHeight, screenWidth }) => {
-  const currentForecastStyle = {
-    ...forecastStyles.item,
-    width: screenWidth,
-    height: screenHeight,
-  };
-
-  return (
-    <View style={index === 0 ? currentForecastStyle : forecastStyles.item}>
-      <Text style={forecastStyles.title}>{subText}</Text>
-      <WeatherIcon
-        shortForecast={data.shortForecast}
-        isDaytime={data.isDaytime}
-        temperature={data.temperature}
-      />
-      <Temperature
-        temperature={data.temperature}
-        temperatureUnit={data.temperatureUnit}
-        fontSize={100}
-      />
-    </View>
-  );
-};
-
-export default class Forecasts extends Component {
+export default class DailyForecast extends Component {
   constructor(props) {
     super(props);
   }
@@ -75,11 +50,9 @@ export default class Forecasts extends Component {
             <ForecastBlock
               data={item}
               index={index}
-              subText={
-                renderHour ? formatHourlyTime(currentHour, index) : item.name
-              }
+              subText={item.name}
               screenHeight={screenHeight}
-              screenWidth={isDailyForecast ? screenWidth / 2 : screenWidth}
+              screenWidth={screenWidth}
             />
           )}
           keyExtractor={item => `${item.number}`}
