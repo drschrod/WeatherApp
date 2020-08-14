@@ -14,8 +14,26 @@
     make initial-setup
     ```
 
-### Windows
-_WIP_
+### [Windows](https://reactnative.dev/docs/environment-setup)
+
+_Note_: If you run VS Code as administrator, the terminal in the application will have admin priveliges
+
+1. Run the following command in powershell (via admin priv. NOTE: You will need to restart your VS code session if using the terminal in that app): 
+    ```powershell
+    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    ```
+2. Install needed packages: `choco install -y nodejs.install python2 jdk8 yarn`
+3. [Install android studio](https://developer.android.com/studio)
+4. Set env variables (TODO: Make this part of the makefile for ease of install)
+    ```powershell
+        $Env:ANDROID_HOME = "D:\Programs\android_studio_sdk"
+    ``` 
+    - Note: you want to use the path to wherever you installed the android studio sdk's
+5. `yarn install`
+6. `%ANDROID_HOME%/tools/bin/sdkmanager --licenses`
+7. `yarn android`
+
+
 ``` bash
 # From the root project directory...
 make initial-setup
