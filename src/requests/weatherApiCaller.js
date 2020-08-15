@@ -2,14 +2,14 @@ import Geolocation from '@react-native-community/geolocation';
 
 const baseUrl = 'https://api.weather.gov/';
 
-const transformForecastData = data => ({
+const transformForecastData = (data) => ({
   updatedAt: data.updated,
   units: data.units,
   elevation: data.elevation,
   intervals: data.periods,
 });
 
-const getForecast = async route => {
+const getForecast = async (route) => {
   let response = await fetch(route);
   let data = await response.json();
   return transformForecastData(data.properties);
@@ -20,7 +20,7 @@ const asyncGetCurrentPosition = (options = {}) =>
     Geolocation.getCurrentPosition(resolve, reject, options);
   });
 
-const getWeatherData = async location => {
+const getWeatherData = async (location) => {
   const { longitude, latitude } = location.coords;
   const coordAccuracy = 4;
   const route = `${baseUrl}points/${latitude.toFixed(

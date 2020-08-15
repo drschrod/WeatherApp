@@ -5,7 +5,7 @@ const colorMapper = {
   hot: '#FF9966', // red orange
 };
 
-const getColorTempGradient = temperature => {
+const getColorTempGradient = (temperature) => {
   if (temperature < 0) {
     return colorMapper.subZero;
   } else if (temperature < 49) {

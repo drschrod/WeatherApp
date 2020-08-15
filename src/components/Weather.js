@@ -31,9 +31,9 @@ export default class Weather extends Component {
   }
   componentDidMount() {
     asyncGetCurrentPosition()
-      .then(location => getWeatherData(location))
-      .then(weatherData => this.setState({ weatherData, loading: false }))
-      .catch(error => this.setState({ error, loading: false }));
+      .then((location) => getWeatherData(location))
+      .then((weatherData) => this.setState({ weatherData, loading: false }))
+      .catch((error) => this.setState({ error, loading: false }));
 
     setInterval(() => {
       this.setState({

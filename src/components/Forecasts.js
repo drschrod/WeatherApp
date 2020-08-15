@@ -82,7 +82,7 @@ export default class Forecasts extends Component {
               screenWidth={isDailyForecast ? screenWidth / 2 : screenWidth}
             />
           )}
-          keyExtractor={item => `${item.number}`}
+          keyExtractor={(item) => `${item.number}`}
           horizontal={renderHorizontally}
           snapToInterval={Dimensions.get('window').width}
         />

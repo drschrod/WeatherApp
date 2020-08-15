@@ -42,7 +42,7 @@ export default class HourlyForecast extends Component {
               screenWidth={screenWidth}
             />
           )}
-          keyExtractor={item => `${item.number}`}
+          keyExtractor={(item) => `${item.number}`}
           horizontal={renderHorizontally}
           snapToInterval={Dimensions.get('window').width}
         />
