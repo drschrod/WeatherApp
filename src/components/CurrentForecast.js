@@ -1,4 +1,5 @@
 import React, { Component, useEffect } from 'react';
+
 import {
   ActivityIndicator,
   Text,
@@ -8,11 +9,14 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import WeatherIcon from './WeatherIcon';
-import Temperature from './Temperature';
-import { currentForecastStyles } from '../asssets/styles';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import { currentForecastStyles } from '../asssets/styles';
+
+import Temperature from './Temperature';
+import WeatherIcon from './WeatherIcon';
+Icon.loadFont();
 function CurrentForecast({ temperature, unit, shortForecast }) {
   console.log({ temperature, unit, shortForecast });
   return (
