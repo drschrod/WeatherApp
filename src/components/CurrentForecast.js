@@ -13,19 +13,14 @@ import Temperature from './Temperature';
 import { currentForecastStyles } from '../asssets/styles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-function CurrentForecast({
-  height,
-  temperature,
-  unit,
-  shortForecast,
-  isDaytime,
-}) {
+function CurrentForecast({ temperature, unit, shortForecast }) {
+  console.log({ temperature, unit, shortForecast });
   return (
+    //   NOTE: I want weather alerts and such found here
     <View
       style={{
         ...currentForecastStyles.container,
         justifyContent: 'center',
-        height,
       }}
     >
       <Text style={currentForecastStyles.text}>Currently</Text>

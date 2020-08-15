@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet } from 'react-native';
 
-export default class Temperature extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    const { temperature, temperatureUnit, color, fontSize } = this.props;
-
-    return (
-      <Text style={{ ...styles.temperatureText, fontSize }}>
-        {`${temperature}° ${temperatureUnit}`}
-      </Text>
-    );
-  }
+export default function Temperature({
+  temperature,
+  temperatureUnit,
+  color,
+  fontSize,
+}) {
+  console.log({ temperature, temperatureUnit, color, fontSize });
+  return (
+    <Text style={{ ...styles.temperatureText, fontSize }}>
+      {/* {`${temperature}° ${temperatureUnit}`} */}
+      {`${temperature}°`}
+    </Text>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -8,12 +8,9 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-
-import Temperature from './Temperature';
-import Forecasts from './Forecasts';
+import MainPage from '../containers/MainPage';
 import DailyForecast from './DailyForecast';
-import HourlyForecast from './HourlyForecast';
-import CurrentForecast from './CurrentForecast';
+
 import {
   getWeatherData,
   asyncGetCurrentPosition,
@@ -23,10 +20,12 @@ export default class Weather extends Component {
   constructor(props) {
     super(props);
     const screenHeight = Dimensions.get('screen').height;
+    const screenWidth = Dimensions.get('screen').width;
     this.state = {
       loading: true,
       currentHour: new Date().getHours(),
       pageHeight: screenHeight * 0.9,
+      pageWidth: screenWidth,
       windowDimensions: Dimensions.get('screen'),
     };
   }
@@ -66,7 +65,6 @@ export default class Weather extends Component {
       temperatureTrend,
       windSpeed,
       windDirection,
-      icon,
       shortForecast,
       detailedForecast,
     } = this.state.weatherData.forecast.current;
@@ -80,22 +78,15 @@ export default class Weather extends Component {
           decelerationRate={'fast'}
           pagingEnabled={true}
           scrollToOverflowEnabled={true}
-          snapToInterval={this.state.pageHeight}
+          snapToInterval={this.state.pageWidth}
           snapToAlignment={'center'}
+          horizontal={true}
         >
-          <CurrentForecast
-            height={this.state.pageHeight}
-            temperature={temperature}
-            unit={temperatureUnit}
-            shortForecast={shortForecast}
-            isDaytime={isDaytime}
-          />
-          {/* Hourly Forecast */}
-          <HourlyForecast
-            forecast={this.state.weatherData.forecast.hourly.intervals}
-            forecastRange={11}
-            renderHorizontally={true}
-            renderHour={true}
+          <MainPage
+            hourlyForecast={this.state.weatherData.forecast.hourly.intervals}
+            currentTemperature={temperature}
+            temperatureUnit={temperatureUnit}
+            currentForecast={shortForecast}
             currentHour={this.state.currentHour}
             screenHeight={this.state.pageHeight}
             screenWidth={this.state.windowDimensions.width}
@@ -103,11 +94,12 @@ export default class Weather extends Component {
           {/* Daily Forecast */}
           <DailyForecast
             forecast={this.state.weatherData.forecast.daily.intervals}
-            forecastRange={7}
-            renderHorizontally={true}
+            forecastRange={14}
+            renderHorizontally={false}
             screenHeight={this.state.pageHeight}
             screenWidth={this.state.windowDimensions.width}
             isDailyForecast={true}
+            isDaytime={isDaytime}
           />
         </ScrollView>
       </View>

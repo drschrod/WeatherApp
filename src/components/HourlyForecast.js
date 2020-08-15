@@ -24,14 +24,13 @@ export default class HourlyForecast extends Component {
       forecastRange,
       renderHorizontally,
       currentHour,
-      renderHour,
       screenHeight,
       screenWidth,
-      isDailyForecast,
     } = this.props;
 
     return (
-      <View style={forecastStyles.view}>
+      <View style={{ ...forecastStyles.view, height: screenHeight / 2 }}>
+        <Text style={forecastStyles.text}>TEST</Text>
         <FlatList
           data={forecast.slice(0, forecastRange)}
           renderItem={({ item, index }) => (
@@ -39,8 +38,8 @@ export default class HourlyForecast extends Component {
               data={item}
               index={index}
               subText={formatHourlyTime(currentHour, index)}
-              screenHeight={screenHeight}
-              screenWidth={isDailyForecast ? screenWidth / 2 : screenWidth}
+              screenHeight={screenHeight / 2}
+              screenWidth={screenWidth}
             />
           )}
           keyExtractor={item => `${item.number}`}

@@ -4,11 +4,18 @@ import WeatherIcon from './WeatherIcon';
 import Temperature from './Temperature';
 import { Text, View } from 'react-native';
 
-const ForecastBlock = ({ data, index, subText, screenHeight, screenWidth }) => {
+const ForecastBlock = ({
+  data,
+  subText,
+  screenHeight,
+  screenWidth,
+  temperatureFontSize = 60,
+  weatherIconSize = 60,
+}) => {
   const currentForecastStyle = {
     ...forecastStyles.item,
     width: screenWidth,
-    height: screenHeight,
+    // height: screenHeight,
   };
 
   return (
@@ -18,11 +25,12 @@ const ForecastBlock = ({ data, index, subText, screenHeight, screenWidth }) => {
         shortForecast={data.shortForecast}
         isDaytime={data.isDaytime}
         temperature={data.temperature}
+        size={weatherIconSize}
       />
       <Temperature
         temperature={data.temperature}
         temperatureUnit={data.temperatureUnit}
-        fontSize={100}
+        fontSize={temperatureFontSize}
       />
     </View>
   );
