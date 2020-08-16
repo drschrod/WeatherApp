@@ -34,11 +34,7 @@ function HourlyForecast({
             data={item}
             index={index}
             subText={
-              <Hour
-                currentHour={currentHour}
-                index={index}
-                fontSize={50}
-              ></Hour>
+              <Hour currentHour={currentHour} index={index} fontSize={50} />
             }
             screenHeight={screenHeight / 2}
             screenWidth={screenWidth}

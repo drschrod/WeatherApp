@@ -11,27 +11,27 @@ const HSLToHex = ({ hue, saturation, luminance, alpha }) => {
     blue = 0,
     newAlpha = 0;
 
-  if (0 <= hue < 60) {
+  if (hue >= 0 < 60) {
     red = c;
     green = x;
     blue = 0;
-  } else if (60 <= hue < 120) {
+  } else if (hue >= 60 < 120) {
     red = x;
     green = c;
     blue = 0;
-  } else if (120 <= hue < 180) {
+  } else if (hue >= 120 < 180) {
     red = 0;
     green = c;
     blue = x;
-  } else if (180 <= hue < 240) {
+  } else if (hue >= 180 < 240) {
     red = 0;
     green = x;
     blue = c;
-  } else if (240 <= hue < 300) {
+  } else if (hue >= 240 < 300) {
     red = x;
     green = 0;
     blue = c;
-  } else if (300 <= hue < 360) {
+  } else if (hue >= 300 < 360) {
     red = c;
     green = 0;
     blue = x;
@@ -43,10 +43,18 @@ const HSLToHex = ({ hue, saturation, luminance, alpha }) => {
   newAlpha = Math.round(alpha * 255).toString(16);
 
   // Prepend 0s, if necessary
-  if (red.length === 1) red = '0' + red;
-  if (green.length === 1) green = '0' + green;
-  if (blue.length === 1) blue = '0' + blue;
-  if (newAlpha.length === 1) newAlpha = '0' + newAlpha;
+  if (red.length === 1) {
+    red = '0' + red;
+  }
+  if (green.length === 1) {
+    green = '0' + green;
+  }
+  if (blue.length === 1) {
+    blue = '0' + blue;
+  }
+  if (newAlpha.length === 1) {
+    newAlpha = '0' + newAlpha;
+  }
 
   return '#' + red + green + blue + newAlpha;
 };
@@ -63,27 +71,27 @@ const HSLToRGB = ({ hue, saturation, luminance }) => {
     green = 0,
     blue = 0;
 
-  if (0 <= hue && hue < 60) {
+  if (hue >= 0 && hue < 60) {
     red = c;
     green = x;
     blue = 0;
-  } else if (60 <= hue && hue < 120) {
+  } else if (hue >= 60 && hue < 120) {
     red = x;
     green = c;
     blue = 0;
-  } else if (120 <= hue && hue < 180) {
+  } else if (hue >= 120 && hue < 180) {
     red = 0;
     green = c;
     blue = x;
-  } else if (180 <= hue && hue < 240) {
+  } else if (hue >= 180 && hue < 240) {
     red = 0;
     green = x;
     blue = c;
-  } else if (240 <= hue && hue < 300) {
+  } else if (hue >= 240 && hue < 300) {
     red = x;
     green = 0;
     blue = c;
-  } else if (300 <= hue && hue < 360) {
+  } else if (hue >= 300 && hue < 360) {
     red = c;
     green = 0;
     blue = x;
