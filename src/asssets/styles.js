@@ -29,7 +29,6 @@ const defaultStyles = {
     justifyContent: 'space-around',
     flexDirection: 'column',
     alignItems: 'center',
-    height: Dimensions.get('window').height,
     width: Dimensions.get('window').width,
   },
   title: {
@@ -39,6 +38,16 @@ const defaultStyles = {
   },
   text: {
     ...defaultTextStyles,
+  },
+  pressable: {
+    borderRadius: 8,
+    padding: 20,
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  column: {
+    flexDirection: 'column',
   },
 };
 
@@ -61,14 +70,15 @@ module.exports = {
       flexDirection: 'row',
       alignItems: 'flex-start',
       marginVertical: 5,
-      width: Dimensions.get('window').width,
+    },
+    block: {
+      marginVertical: 5,
+      marginHorizontal: 10,
+      width: Dimensions.get('window').width - 20,
     },
     column: {
       flexDirection: 'column',
       alignItems: 'center',
-      backgroundColor: 'black',
-      opacity: 0.5,
-      marginVertical: 5,
     },
     subRow: {
       flexDirection: 'row',
@@ -79,13 +89,15 @@ module.exports = {
       alignItems: 'center',
     },
   }),
-  forecastStyles: StyleSheet.create({
+  forecastBlock: StyleSheet.create({
     ...defaultStyles,
     item: {
       justifyContent: 'space-around',
       flexDirection: 'row',
-
-      width: Dimensions.get('window').width,
+      alignItems: 'stretch',
+      marginVertical: 5,
+      marginHorizontal: 10,
+      width: Dimensions.get('window').width - 20,
     },
   }),
   currentForecastStyles: StyleSheet.create({
@@ -93,6 +105,28 @@ module.exports = {
     text: {
       ...defaultTextStyles,
       fontSize: 50,
+    },
+    row: {
+      justifyContent: 'space-around',
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      marginVertical: 5,
+      width: Dimensions.get('window').width,
+    },
+    block: {
+      marginVertical: 5,
+    },
+    column: {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    subRow: {
+      flexDirection: 'row',
+      alignItems: 'baseline',
+    },
+    subColumn: {
+      flexDirection: 'column',
+      alignItems: 'center',
     },
   }),
   styles: StyleSheet.create({

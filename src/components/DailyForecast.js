@@ -15,8 +15,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Constants from 'expo-constants';
 
 import { forecastStyles, dailyForecastStyles } from '../asssets/styles';
-import { formatHourlyTime } from '../helpers/time';
-
+import { getColorGradientFromTemperature } from '../helpers/colorTemperature';
 import Temperature from './Temperature';
 import WeatherIcon from './WeatherIcon';
 
@@ -91,21 +90,47 @@ const DayForecast = ({
   screenWidth,
   dayTimeForecast,
   nightTimeForecast,
+  index,
+  maxIndex,
 }) => {
+  let dayForecastBlockStyle;
+  switch (index) {
+    case 0:
+      dayForecastBlockStyle = {
+        ...dailyForecastStyles.block,
+        borderTopStartRadius: 20,
+        borderTopEndRadius: 20,
+      };
+      break;
+    case maxIndex:
+      dayForecastBlockStyle = {
+        ...dailyForecastStyles.block,
+        borderBottomStartRadius: 20,
+        borderBottomEndRadius: 20,
+      };
+      break;
+    default:
+      dayForecastBlockStyle = dailyForecastStyles.block;
+      break;
+  }
   if (dayTimeForecast && nightTimeForecast) {
     return (
       <LinearGradient
-        colors={['#4c669f', '#3b5998', '#192f6a']}
-        style={{ flex: 1 }}
+        colors={getColorGradientFromTemperature({
+          dayTemp: dayTimeForecast.temperature,
+          nightTemp: nightTimeForecast.temperature,
+        })}
+        start={{ x: 0.3, y: 0.3 }}
+        end={{ x: 0.8, y: 0.8 }}
+        style={dayForecastBlockStyle}
       >
         <View style={dailyForecastStyles.column}>
-          {/* Day row */}
-          {/*      Title       */}
-          {/*   icon | icon    */}
-          {/*   Temp | Temp    */}
+          {/*  Day row layout  */}
+          {/*          Title            */}
+          {/*   icon temp | icon temp   */}
           <Text style={dailyForecastStyles.title}>{day}</Text>
           <View style={dailyForecastStyles.row}>
-            <View style={dailyForecastStyles.subColumn}>
+            <View style={dailyForecastStyles.subRow}>
               <WeatherIcon
                 shortForecast={dayTimeForecast.shortForecast}
                 isDaytime={dayTimeForecast.isDaytime}
@@ -118,7 +143,7 @@ const DayForecast = ({
                 fontSize={50}
               />
             </View>
-            <View style={dailyForecastStyles.subColumn}>
+            <View style={dailyForecastStyles.subRow}>
               <WeatherIcon
                 shortForecast={nightTimeForecast.shortForecast}
                 isDaytime={nightTimeForecast.isDaytime}
@@ -139,16 +164,24 @@ const DayForecast = ({
 
   const data = dayTimeForecast ? dayTimeForecast : nightTimeForecast;
   return (
-    <View>
-      <Text style={dailyForecastStyles.title}>{day}</Text>
-      <ForecastBlock
-        shortForecast={data.shortForecast}
-        isDaytime={data.isDaytime}
-        temperature={data.temperature}
-        temperatureUnit={data.temperatureUnit}
-        temperatureFontSize={50}
-      />
-    </View>
+    <LinearGradient
+      colors={getColorGradientFromTemperature({
+        dayTemp: dayTimeForecast.temperature,
+        nightTemp: nightTimeForecast.temperature,
+      })}
+      style={dailyForecastStyles.block}
+    >
+      <View>
+        <Text style={dailyForecastStyles.title}>{day}</Text>
+        <ForecastBlock
+          shortForecast={data.shortForecast}
+          isDaytime={data.isDaytime}
+          temperature={data.temperature}
+          temperatureUnit={data.temperatureUnit}
+          temperatureFontSize={50}
+        />
+      </View>
+    </LinearGradient>
   );
 };
 
@@ -174,6 +207,8 @@ function DailyForecast({
             nightTimeForecast={item.nightTimeForecast}
             screenHeight={screenHeight}
             screenWidth={screenWidth}
+            index={index}
+            maxIndex={state.length - 1}
           />
         )}
         keyExtractor={(item, index) => `${index}`}

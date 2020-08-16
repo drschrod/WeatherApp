@@ -27,7 +27,8 @@ function WeatherIcon({ shortForecast, isDaytime, temperature, size = 200 }) {
     <Icon
       name={getIconFromForecast({ shortForecast, isDaytime })}
       size={size}
-      color={getColorTempGradient(temperature)}
+      // color={getColorTempGradient(temperature)}
+      color={isDaytime ? 'yellow' : 'purple'}
     />
   );
 }

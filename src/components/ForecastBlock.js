@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
-import { forecastStyles } from '../asssets/styles';
-import WeatherIcon from './WeatherIcon';
-import Temperature from './Temperature';
+
 import { Text, View } from 'react-native';
+
+import LinearGradient from 'react-native-linear-gradient';
+
+import { forecastBlock } from '../asssets/styles';
+import { getColorGradientFromTemperature } from '../helpers/colorTemperature';
+
+import Temperature from './Temperature';
+import WeatherIcon from './WeatherIcon';
 
 const ForecastBlock = ({
   data,
@@ -11,16 +17,39 @@ const ForecastBlock = ({
   screenWidth,
   temperatureFontSize = 60,
   weatherIconSize = 60,
+  index,
+  maxIndex,
 }) => {
-  const currentForecastStyle = {
-    ...forecastStyles.item,
-    width: screenWidth,
-    // height: screenHeight,
-  };
-
+  let currentForecastStyle;
+  switch (index) {
+    case 0:
+      currentForecastStyle = {
+        ...forecastBlock.item,
+        borderTopStartRadius: 20,
+        borderTopEndRadius: 20,
+      };
+      break;
+    case maxIndex:
+      currentForecastStyle = {
+        ...forecastBlock.item,
+        borderBottomStartRadius: 20,
+        borderBottomEndRadius: 20,
+      };
+      break;
+    default:
+      currentForecastStyle = forecastBlock.item;
+      break;
+  }
   return (
-    <View style={currentForecastStyle}>
-      <Text style={forecastStyles.title}>{subText}</Text>
+    <LinearGradient
+      colors={getColorGradientFromTemperature({
+        temperature: data.temperature,
+      })}
+      start={{ x: 0.3, y: 0.3 }}
+      end={{ x: 0.8, y: 0.8 }}
+      style={currentForecastStyle}
+    >
+      {subText}
       <WeatherIcon
         shortForecast={data.shortForecast}
         isDaytime={data.isDaytime}
@@ -32,7 +61,7 @@ const ForecastBlock = ({
         temperatureUnit={data.temperatureUnit}
         fontSize={temperatureFontSize}
       />
-    </View>
+    </LinearGradient>
   );
 };
 

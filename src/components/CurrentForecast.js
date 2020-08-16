@@ -17,17 +17,19 @@ import { currentForecastStyles } from '../asssets/styles';
 import Temperature from './Temperature';
 import WeatherIcon from './WeatherIcon';
 Icon.loadFont();
-function CurrentForecast({ temperature, unit, shortForecast }) {
-  console.log({ temperature, unit, shortForecast });
+function CurrentForecast({ temperature, unit, shortForecast, isDaytime }) {
   return (
-    //   NOTE: I want weather alerts and such found here
     <View
       style={{
         ...currentForecastStyles.container,
-        justifyContent: 'center',
       }}
     >
-      <Text style={currentForecastStyles.text}>Currently</Text>
+      <WeatherIcon
+        shortForecast={shortForecast}
+        isDaytime={isDaytime}
+        temperature={temperature}
+        size={100}
+      />
       <Text style={currentForecastStyles.text}>
         <Temperature
           temperature={temperature}
@@ -35,10 +37,6 @@ function CurrentForecast({ temperature, unit, shortForecast }) {
           fontSize={100}
         />
       </Text>
-      <Text
-        style={{ ...currentForecastStyles.text, fontStyle: 'italic' }}
-      >{`and ${shortForecast}\t`}</Text>
-      <Icon name='keyboard-arrow-up' size={100} color='white' />
     </View>
   );
 }

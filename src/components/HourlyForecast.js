@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import {
   StyleSheet,
   Text,
@@ -8,45 +9,48 @@ import {
   useWindowDimensions,
   Dimensions,
 } from 'react-native';
+
 import Constants from 'expo-constants';
-import ForecastBlock from './ForecastBlock';
+
+import { styles } from '../asssets/styles';
 import { formatHourlyTime } from '../helpers/time';
-import { forecastStyles } from '../asssets/styles';
+import Hour from './Hour';
+import ForecastBlock from './ForecastBlock';
 
-export default class HourlyForecast extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const {
-      forecast,
-      forecastRange,
-      renderHorizontally,
-      currentHour,
-      screenHeight,
-      screenWidth,
-    } = this.props;
-
-    return (
-      <View style={{ ...forecastStyles.view, height: screenHeight / 2 }}>
-        <Text style={forecastStyles.text}>TEST</Text>
-        <FlatList
-          data={forecast.slice(0, forecastRange)}
-          renderItem={({ item, index }) => (
-            <ForecastBlock
-              data={item}
-              index={index}
-              subText={formatHourlyTime(currentHour, index)}
-              screenHeight={screenHeight / 2}
-              screenWidth={screenWidth}
-            />
-          )}
-          keyExtractor={(item) => `${item.number}`}
-          horizontal={renderHorizontally}
-          snapToInterval={Dimensions.get('window').width}
-        />
-      </View>
-    );
-  }
+function HourlyForecast({
+  forecast,
+  forecastRange,
+  renderHorizontally,
+  currentHour,
+  screenHeight,
+  screenWidth,
+}) {
+  return (
+    <View style={{ ...styles.view }}>
+      <FlatList
+        data={forecast.slice(0, forecastRange)}
+        renderItem={({ item, index }) => (
+          <ForecastBlock
+            data={item}
+            index={index}
+            subText={
+              <Hour
+                currentHour={currentHour}
+                index={index}
+                fontSize={50}
+              ></Hour>
+            }
+            screenHeight={screenHeight / 2}
+            screenWidth={screenWidth}
+            maxIndex={forecastRange - 1}
+          />
+        )}
+        keyExtractor={(item) => `${item.number}`}
+        horizontal={renderHorizontally}
+        snapToInterval={Dimensions.get('window').width}
+      />
+    </View>
+  );
 }
+
+export default HourlyForecast;

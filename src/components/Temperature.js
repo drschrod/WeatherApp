@@ -7,7 +7,6 @@ export default function Temperature({
   color,
   fontSize,
 }) {
-  console.log({ temperature, temperatureUnit, color, fontSize });
   return (
     <Text style={{ ...styles.temperatureText, fontSize }}>
       {/* {`${temperature}° ${temperatureUnit}`} */}

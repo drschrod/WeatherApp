@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import {
   ActivityIndicator,
   Text,
@@ -8,14 +9,16 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import MainPage from '../containers/MainPage';
-import DailyForecast from './DailyForecast';
 
+import { weatherStyles, imageBackground } from '../asssets/styles';
+import CurrentForecast from '../components/CurrentForecast';
+import HourlyForecast from '../components/HourlyForecast';
 import {
   getWeatherData,
   asyncGetCurrentPosition,
 } from '../requests/weatherApiCaller';
-import { weatherStyles, imageBackground } from '../asssets/styles';
+
+import DailyForecast from './DailyForecast';
 export default class Weather extends Component {
   constructor(props) {
     super(props);
@@ -73,6 +76,12 @@ export default class Weather extends Component {
     const textColor = temperature >= 80 ? 'red' : 'blue';
     return (
       <View style={weatherStyles.view}>
+        <CurrentForecast
+          temperature={temperature}
+          unit={temperatureUnit}
+          shortForecast={shortForecast}
+          isDaytime={isDaytime}
+        />
         <ScrollView
           style={weatherStyles.scrollView}
           decelerationRate={'fast'}
@@ -82,11 +91,10 @@ export default class Weather extends Component {
           snapToAlignment={'center'}
           horizontal={true}
         >
-          <MainPage
-            hourlyForecast={this.state.weatherData.forecast.hourly.intervals}
-            currentTemperature={temperature}
-            temperatureUnit={temperatureUnit}
-            currentForecast={shortForecast}
+          <HourlyForecast
+            forecast={this.state.weatherData.forecast.hourly.intervals}
+            forecastRange={11}
+            renderHorizontally={false}
             currentHour={this.state.currentHour}
             screenHeight={this.state.pageHeight}
             screenWidth={this.state.windowDimensions.width}
