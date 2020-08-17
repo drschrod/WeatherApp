@@ -1,20 +1,10 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  FlatList,
-  useWindowDimensions,
-  Dimensions,
-} from 'react-native';
+import { Text, View, FlatList, Dimensions } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
-import Constants from 'expo-constants';
-
-import { forecastStyles, dailyForecastStyles } from '../asssets/styles';
+import { dailyForecastStyles } from '../asssets/styles';
 import { getColorGradientFromTemperature } from '../helpers/colorTemperature';
 import Temperature from './Temperature';
 import WeatherIcon from './WeatherIcon';
@@ -57,7 +47,7 @@ const pairDailyForecasts = ({ forecast, isDaytime }) => {
       nightTimeForecast: forecast[forecast.length - 1],
     });
   }
-  return data;
+  return data.reverse();
 };
 
 const ForecastBlock = ({
@@ -92,86 +82,71 @@ const DayForecast = ({
   nightTimeForecast,
   index,
   maxIndex,
+  isDaytime,
 }) => {
-  let dayForecastBlockStyle;
-  switch (index) {
-    case 0:
-      dayForecastBlockStyle = {
-        ...dailyForecastStyles.block,
-        borderTopStartRadius: 20,
-        borderTopEndRadius: 20,
-      };
-      break;
-    case maxIndex:
-      dayForecastBlockStyle = {
-        ...dailyForecastStyles.block,
-        borderBottomStartRadius: 20,
-        borderBottomEndRadius: 20,
-      };
-      break;
-    default:
-      dayForecastBlockStyle = dailyForecastStyles.block;
-      break;
-  }
   if (dayTimeForecast && nightTimeForecast) {
     return (
-      <LinearGradient
-        colors={getColorGradientFromTemperature({
-          dayTemp: dayTimeForecast.temperature,
-          nightTemp: nightTimeForecast.temperature,
-        })}
-        start={{ x: 0.3, y: 0.3 }}
-        end={{ x: 0.8, y: 0.8 }}
-        style={dayForecastBlockStyle}
-      >
-        <View style={dailyForecastStyles.column}>
-          {/*  Day row layout  */}
-          {/*          Title            */}
-          {/*   icon temp | icon temp   */}
-          <Text style={dailyForecastStyles.title}>{day}</Text>
-          <View style={dailyForecastStyles.row}>
-            <View style={dailyForecastStyles.subRow}>
-              <WeatherIcon
-                shortForecast={dayTimeForecast.shortForecast}
-                isDaytime={dayTimeForecast.isDaytime}
-                temperature={dayTimeForecast.temperature}
-                size={50}
-              />
-              <Temperature
-                temperature={dayTimeForecast.temperature}
-                temperatureUnit={dayTimeForecast.temperatureUnit}
-                fontSize={50}
-              />
-            </View>
-            <View style={dailyForecastStyles.subRow}>
-              <WeatherIcon
-                shortForecast={nightTimeForecast.shortForecast}
-                isDaytime={nightTimeForecast.isDaytime}
-                temperature={nightTimeForecast.temperature}
-                size={50}
-              />
-              <Temperature
-                temperature={nightTimeForecast.temperature}
-                temperatureUnit={nightTimeForecast.temperatureUnit}
-                fontSize={50}
-              />
+      <View elevation={maxIndex - index} style={dailyForecastStyles.container}>
+        <LinearGradient
+          colors={getColorGradientFromTemperature({
+            dayTemp: dayTimeForecast.temperature,
+            nightTemp: nightTimeForecast.temperature,
+            isDaytime,
+          })}
+          start={{ x: 0.3, y: 0.3 }}
+          end={{ x: 0.8, y: 0.8 }}
+          style={dailyForecastStyles.container}
+        >
+          <View style={dailyForecastStyles.column}>
+            {/*  Day row layout  */}
+            {/*          Title            */}
+            {/*   icon temp | icon temp   */}
+            <Text style={dailyForecastStyles.title}>{day}</Text>
+            <View style={dailyForecastStyles.row}>
+              <View style={dailyForecastStyles.subRow}>
+                <WeatherIcon
+                  shortForecast={dayTimeForecast.shortForecast}
+                  isDaytime={dayTimeForecast.isDaytime}
+                  temperature={dayTimeForecast.temperature}
+                  size={50}
+                />
+                <Temperature
+                  temperature={dayTimeForecast.temperature}
+                  temperatureUnit={dayTimeForecast.temperatureUnit}
+                  fontSize={50}
+                />
+              </View>
+              <View style={dailyForecastStyles.subRow}>
+                <WeatherIcon
+                  shortForecast={nightTimeForecast.shortForecast}
+                  isDaytime={nightTimeForecast.isDaytime}
+                  temperature={nightTimeForecast.temperature}
+                  size={50}
+                />
+                <Temperature
+                  temperature={nightTimeForecast.temperature}
+                  temperatureUnit={nightTimeForecast.temperatureUnit}
+                  fontSize={50}
+                />
+              </View>
             </View>
           </View>
-        </View>
-      </LinearGradient>
+        </LinearGradient>
+      </View>
     );
   }
 
-  const data = dayTimeForecast ? dayTimeForecast : nightTimeForecast;
+  const data = dayTimeForecast !== null ? dayTimeForecast : nightTimeForecast;
   return (
-    <LinearGradient
-      colors={getColorGradientFromTemperature({
-        dayTemp: dayTimeForecast.temperature,
-        nightTemp: nightTimeForecast.temperature,
-      })}
-      style={dailyForecastStyles.block}
-    >
-      <View>
+    <View elevation={maxIndex - index} style={dailyForecastStyles.container}>
+      <LinearGradient
+        colors={getColorGradientFromTemperature({
+          dayTemp: data.temperature,
+          nightTemp: data.temperature,
+          isDaytime: isDaytime,
+        })}
+        style={dailyForecastStyles.container}
+      >
         <Text style={dailyForecastStyles.title}>{day}</Text>
         <ForecastBlock
           shortForecast={data.shortForecast}
@@ -180,8 +155,8 @@ const DayForecast = ({
           temperatureUnit={data.temperatureUnit}
           temperatureFontSize={50}
         />
-      </View>
-    </LinearGradient>
+      </LinearGradient>
+    </View>
   );
 };
 
@@ -196,6 +171,8 @@ function DailyForecast({
   const [state, setState] = useState(() => {
     return pairDailyForecasts({ forecast, isDaytime });
   });
+  // TODO: Set Header to "TODAY", idk, it looks weird right now
+  // TODO: add animated fade in as scroll goes beyond lower threshold
   return (
     <View>
       <FlatList
@@ -207,10 +184,13 @@ function DailyForecast({
             nightTimeForecast={item.nightTimeForecast}
             screenHeight={screenHeight}
             screenWidth={screenWidth}
+            isDaytime={isDaytime}
             index={index}
             maxIndex={state.length - 1}
           />
         )}
+        style={dailyForecastStyles.flatList}
+        inverted={true}
         keyExtractor={(item, index) => `${index}`}
         horizontal={renderHorizontally}
         snapToInterval={Dimensions.get('window').width}

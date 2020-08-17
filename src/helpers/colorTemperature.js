@@ -103,27 +103,32 @@ const HSLToRGB = ({ hue, saturation, luminance }) => {
   return `rgba(${red}, ${green}, ${blue}, 1)`;
 };
 
-const colorFromTemperature = (temperature) => {
+const colorFromTemperature = ({ temperature, isDaytime }) => {
+  const luminance = isDaytime ? 56 : 30;
   const hue = 200 + 160 * (temperature / 100);
-  return HSLToHex({ hue, luminance: 56, saturation: 82, alpha: 0.6 });
+  return HSLToHex({ hue, luminance, saturation: 82, alpha: 1 });
 };
 
 const getColorGradientFromTemperature = ({
   dayTemp,
   nightTemp,
   temperature,
+  isDaytime,
 }) => {
   if (dayTemp && nightTemp) {
-    return [colorFromTemperature(dayTemp), colorFromTemperature(nightTemp)];
+    return [
+      colorFromTemperature({ temperature: dayTemp, isDaytime }),
+      colorFromTemperature({ temperature: nightTemp, isDaytime }),
+    ];
   } else if (dayTemp || nightTemp) {
     return [
-      colorFromTemperature(dayTemp || nightTemp),
-      colorFromTemperature(dayTemp || nightTemp),
+      colorFromTemperature({ temperature: dayTemp || nightTemp, isDaytime }),
+      colorFromTemperature({ temperature: dayTemp || nightTemp, isDaytime }),
     ];
   } else if (temperature) {
     return [
-      colorFromTemperature(temperature),
-      colorFromTemperature(temperature),
+      colorFromTemperature({ temperature, isDaytime }),
+      colorFromTemperature({ temperature, isDaytime }),
     ];
   }
   return [colorFromTemperature(50), colorFromTemperature(50)];

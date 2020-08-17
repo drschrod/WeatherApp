@@ -1,8 +1,7 @@
-import React, { Component, useEffect } from 'react';
+import React from 'react';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { getColorTempGradient } from '../helpers/colorTemperature';
 Icon.loadFont();
 function WeatherIcon({ shortForecast, isDaytime, temperature, size = 200 }) {
   const getIconFromForecast = ({ shortForecast, isDaytime }) => {
@@ -28,7 +27,7 @@ function WeatherIcon({ shortForecast, isDaytime, temperature, size = 200 }) {
       name={getIconFromForecast({ shortForecast, isDaytime })}
       size={size}
       // color={getColorTempGradient(temperature)}
-      color={isDaytime ? 'yellow' : 'purple'}
+      color='white'
     />
   );
 }

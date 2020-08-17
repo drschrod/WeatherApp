@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -19,49 +19,44 @@ const ForecastBlock = ({
   weatherIconSize = 60,
   index,
   maxIndex,
+  isDaytime,
 }) => {
-  let currentForecastStyle;
-  switch (index) {
-    case 0:
-      currentForecastStyle = {
-        ...forecastBlock.item,
-        borderTopStartRadius: 20,
-        borderTopEndRadius: 20,
-      };
-      break;
-    case maxIndex:
-      currentForecastStyle = {
-        ...forecastBlock.item,
-        borderBottomStartRadius: 20,
-        borderBottomEndRadius: 20,
-      };
-      break;
-    default:
-      currentForecastStyle = forecastBlock.item;
-      break;
+  const itemStyle = [forecastBlock.item];
+  if (index === maxIndex) {
+    itemStyle.push({
+      // borderTopStartRadius: 40,
+      // borderTopEndRadius: 40,
+      marginTop: -190,
+      paddingTop: 200,
+    });
   }
   return (
-    <LinearGradient
-      colors={getColorGradientFromTemperature({
-        temperature: data.temperature,
-      })}
-      start={{ x: 0.3, y: 0.3 }}
-      end={{ x: 0.8, y: 0.8 }}
-      style={currentForecastStyle}
-    >
-      {subText}
-      <WeatherIcon
-        shortForecast={data.shortForecast}
-        isDaytime={data.isDaytime}
-        temperature={data.temperature}
-        size={weatherIconSize}
-      />
-      <Temperature
-        temperature={data.temperature}
-        temperatureUnit={data.temperatureUnit}
-        fontSize={temperatureFontSize}
-      />
-    </LinearGradient>
+    <View elevation={maxIndex - index} style={forecastBlock.shadowBox}>
+      <LinearGradient
+        colors={getColorGradientFromTemperature({
+          temperature: data.temperature,
+          isDaytime: isDaytime,
+        })}
+        start={{ x: 0.3, y: 0.3 }}
+        end={{ x: 0.8, y: 0.8 }}
+        style={itemStyle}
+      >
+        <View style={itemStyle}>
+          {subText}
+          <WeatherIcon
+            shortForecast={data.shortForecast}
+            isDaytime={data.isDaytime}
+            temperature={data.temperature}
+            size={weatherIconSize}
+          />
+          <Temperature
+            temperature={data.temperature}
+            temperatureUnit={data.temperatureUnit}
+            fontSize={temperatureFontSize}
+          />
+        </View>
+      </LinearGradient>
+    </View>
   );
 };
 

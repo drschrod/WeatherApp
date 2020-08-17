@@ -7,30 +7,21 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  ImageBackground,
-} from 'react-native';
-import nightBkg from './src/asssets/nightsky.jpg';
+import { SafeAreaView, StatusBar } from 'react-native';
 
-import { styles, imageBackground } from './src/asssets/styles';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { styles } from './src/asssets/styles';
+
 import Weather from './src/components/Weather';
 
 const App: () => React$Node = () => {
   return (
     <>
-      <ImageBackground source={nightBkg} style={imageBackground}>
-        <SafeAreaView style={styles.safeAreaView} />
-        <StatusBar style={{ opacity: 1 }} barStyle='light-content' />
-        <Weather />
-        <SafeAreaView style={styles.safeAreaView} />
-      </ImageBackground>
+      {/* <ImageBackground source={nightBkg} style={imageBackground}> */}
+      <SafeAreaView style={styles.safeAreaView} />
+      <StatusBar style={{ opacity: 1 }} barStyle='light-content' />
+      <Weather />
+      <SafeAreaView style={styles.safeAreaView} />
+      {/* </ImageBackground> */}
     </>
   );
 };

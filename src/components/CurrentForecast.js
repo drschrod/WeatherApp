@@ -1,14 +1,6 @@
-import React, { Component, useEffect } from 'react';
+import React from 'react';
 
-import {
-  ActivityIndicator,
-  Text,
-  StyleSheet,
-  View,
-  ImageBackground,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
+import { Text, View } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -23,6 +15,7 @@ function CurrentForecast({ temperature, unit, shortForecast, isDaytime }) {
       style={{
         ...currentForecastStyles.container,
       }}
+      elevation={20}
     >
       <WeatherIcon
         shortForecast={shortForecast}
@@ -41,4 +34,5 @@ function CurrentForecast({ temperature, unit, shortForecast, isDaytime }) {
   );
 }
 
+CurrentForecast.PropType;
 export default CurrentForecast;

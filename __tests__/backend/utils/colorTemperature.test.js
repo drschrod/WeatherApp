@@ -6,7 +6,6 @@ import 'react-native';
 import { getColorTempGradient } from '../../../src/helpers/colorTemperature';
 
 // Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
 
 const testTemperatures = [
   { testTemperature: -45, expectedHexColor: '#a1ffff' },

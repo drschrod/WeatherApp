@@ -11,8 +11,13 @@ const transformForecastData = (data) => ({
 
 const getForecast = async (route) => {
   let response = await fetch(route);
+  if (response.status !== 200) {
+    throw Error(
+      `Non 200 response received: ${response.status} for route: ${route}`,
+    );
+  }
   let data = await response.json();
-  return transformForecastData(data.properties);
+  return data.properties.periods;
 };
 
 const asyncGetCurrentPosition = (options = {}) =>
@@ -20,21 +25,27 @@ const asyncGetCurrentPosition = (options = {}) =>
     Geolocation.getCurrentPosition(resolve, reject, options);
   });
 
-const getWeatherData = async (location) => {
-  const { longitude, latitude } = location.coords;
+const getWeatherData = async ({ longitude, latitude }) => {
   const coordAccuracy = 4;
   const route = `${baseUrl}points/${latitude.toFixed(
     coordAccuracy,
   )},${longitude.toFixed(coordAccuracy)}`;
   try {
     const baseData = await fetch(route);
+    if (baseData.status !== 200) {
+      throw Error(
+        `Non 200 response received: ${baseData.status} for route: ${route}`,
+      );
+    }
     const json = await baseData.json();
     const { city, state } = json.properties.relativeLocation.properties;
-
+    // NOTE: There is an error with the api currently when it is refreshing the hourly data every hour on the hour.
+    // Should attempt to cache the hourly and daily forecast and use as backup if the request fails.
+    // Also need to better deterministically tell if the call failed or not even though it sent a 200
     const hourlyForecastRoute = json.properties.forecastHourly;
     const dailyForecastRoute = json.properties.forecast;
     const hourlyForecast = await getForecast(hourlyForecastRoute);
-
+    const dailyForecast = await getForecast(dailyForecastRoute);
     return {
       location: {
         city,
@@ -43,15 +54,15 @@ const getWeatherData = async (location) => {
         longitude,
       },
       forecast: {
-        current: hourlyForecast.intervals[0],
+        current: hourlyForecast[0],
         hourly: hourlyForecast,
-        daily: await getForecast(dailyForecastRoute),
+        daily: dailyForecast,
       },
     };
   } catch (error) {
     console.error(error);
+    throw Error('Weather Data was not loaded properly');
   }
-  return null;
 };
 
 module.exports = {
