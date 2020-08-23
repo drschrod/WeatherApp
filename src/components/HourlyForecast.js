@@ -4,8 +4,8 @@ import { FlatList, Dimensions } from 'react-native';
 
 import { styles } from '../asssets/styles';
 
-import Hour from './Hour';
 import ForecastBlock from './ForecastBlock';
+import Hour from './Hour';
 
 function HourlyForecast({
   forecast,
@@ -41,6 +41,9 @@ function HourlyForecast({
         />
       )}
       initialScrollIndex={forecastRange - 1}
+      onScrollToIndexFailed={(e) => {
+        console.error('HourlyForecast Flatlist: ', e);
+      }}
       ListFooterComponent={header}
       style={styles.flatList}
       inverted={true}
