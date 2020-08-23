@@ -1,3 +1,3 @@
-import MainPage from './MainPage';
+import Weather from './Weather';
 
-export { MainPage };
+export { Weather };

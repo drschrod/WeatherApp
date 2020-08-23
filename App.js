@@ -7,11 +7,11 @@
  */
 
 import React from 'react';
+
 import { SafeAreaView, StatusBar } from 'react-native';
 
+import { Weather } from './src/containers';
 import { styles } from './src/asssets/styles';
-
-import Weather from './src/components/Weather';
 
 const App: () => React$Node = () => {
   return (
