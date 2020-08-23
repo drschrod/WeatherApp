@@ -1,8 +1,11 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { getHourAndAmOrPm } from '../helpers/time';
-import { styles } from '../asssets/styles';
 
+import { Text, View } from 'react-native';
+
+import PropTypes from 'prop-types';
+
+import { styles } from '../asssets/styles';
+import { getHourAndAmOrPm } from '../helpers/time';
 function Hour({ currentHour, fontSize, index = 0 }) {
   const { hour, amOrPm } = getHourAndAmOrPm(currentHour, index);
   return (
@@ -14,3 +17,9 @@ function Hour({ currentHour, fontSize, index = 0 }) {
 }
 
 export default Hour;
+
+Hour.propTypes = {
+  currentHour: PropTypes.number.isRequired,
+  fontSize: PropTypes.number.isRequired,
+  index: PropTypes.number,
+};
