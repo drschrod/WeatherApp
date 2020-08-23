@@ -3,6 +3,7 @@
  */
 
 import 'react-native';
+
 import {
   asyncGetCurrentPosition,
   transformForecastData,
@@ -27,7 +28,7 @@ describe('transformForecastData', () => {
       updatedAt: hourly.properties.updated,
       units: hourly.properties.units,
       elevation: hourly.properties.elevation,
-      forecast: hourly.properties.periods,
+      intervals: hourly.properties.periods,
     });
   });
   test('daily', () => {
@@ -36,7 +37,7 @@ describe('transformForecastData', () => {
       updatedAt: daily.properties.updated,
       units: daily.properties.units,
       elevation: daily.properties.elevation,
-      forecast: daily.properties.periods,
+      intervals: daily.properties.periods,
     });
   });
 });
