@@ -1,12 +1,14 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 Icon.loadFont();
-function WeatherIcon({ shortForecast, isDaytime, temperature, size = 200 }) {
+function WeatherIcon({ shortForecast, isDaytime, size = 200 }) {
   const getIconFromForecast = ({ shortForecast, isDaytime }) => {
     if (isDaytime) {
-      return forecastIconMapper(shortForecast, 'weather-sunny');
+      return forecastIconMapper(shortForecast, 'weather');
     }
     return forecastIconMapper(shortForecast, 'weather-night');
   };
@@ -18,17 +20,23 @@ function WeatherIcon({ shortForecast, isDaytime, temperature, size = 200 }) {
       case 'Partly Cloudy':
         return `${prefix}-partly-cloudy`;
       default:
-        return prefix;
+        return isDaytime ? 'weather-sunny' : 'weather-night';
     }
   };
 
   return (
     <Icon
       name={getIconFromForecast({ shortForecast, isDaytime })}
+      testID={getIconFromForecast({ shortForecast, isDaytime })}
       size={size}
-      // color={getColorTempGradient(temperature)}
       color='white'
     />
   );
 }
 export default WeatherIcon;
+
+WeatherIcon.propTypes = {
+  shortForecast: PropTypes.string.isRequired,
+  isDaytime: PropTypes.bool.isRequired,
+  size: PropTypes.number,
+};
