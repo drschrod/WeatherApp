@@ -1,12 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-/*
-Colors for UI
-https://coolors.co/1a936f-88d498-c6dabf-ffb385-495b7c
-https://coolors.co/5aa9e6-7fc8f8-cc92c2-ffb385-495b7c
-*/
-const baseTextStyles = {
+// TODO: Move this to Weather.js
+const defaultBackgroundColor = () => {
+  const hour = new Date().getHours();
+  if (hour > 17 || hour < 7) {
+    return '#252850';
+  } else {
+    return 'skyblue';
+  }
+};
+
+const defaultTextStyles = {
   fontFamily: 'Avenir',
   fontSize: 25,
   fontWeight: 'bold',
@@ -14,44 +19,176 @@ const baseTextStyles = {
   color: 'white',
 };
 
-const sharedStyles = {
+const boxShadowStyles = {
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 8,
+  },
+  shadowOpacity: 0.46,
+  shadowRadius: 11.14,
+};
+
+const defaultStyles = {
   safeAreaView: {
-    flex: 1,
-    backgroundColor: '#495B7C',
+    backgroundColor: defaultBackgroundColor(),
   },
   view: {
     flex: 1,
   },
+  scrollView: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: defaultBackgroundColor(),
+    overflow: 'visible',
+  },
+  flatList: {
+    backgroundColor: 'rgba(255, 255, 255, 0.0)',
+  },
+  container: {
+    justifyContent: 'space-around',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: Dimensions.get('window').width,
+  },
+  title: {
+    ...defaultTextStyles,
+    fontSize: 50,
+    fontWeight: 'bold',
+  },
+  text: {
+    ...defaultTextStyles,
+  },
+  pressable: {
+    borderRadius: 8,
+    padding: 20,
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  column: {
+    flexDirection: 'column',
+  },
 };
 
 module.exports = {
+  imageBackground: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+  },
   weatherStyles: StyleSheet.create({
-    ...sharedStyles,
-    text: {
-      ...baseTextStyles,
-      color: 'white',
+    ...defaultStyles,
+    bottomNavBar: {
+      ...defaultStyles.row,
+      justifyContent: 'space-around',
+      alignItems: 'center',
+    },
+    pressable: {
+      ...defaultStyles.pressable,
+      ...defaultStyles.text,
+    },
+    pressIn: {
+      ...defaultStyles.text,
+      color: 'black',
     },
   }),
-  forecastStyles: StyleSheet.create({
-    ...sharedStyles,
+  dailyForecastStyles: StyleSheet.create({
+    ...defaultStyles,
+    container: {
+      ...defaultStyles.container,
+      borderBottomStartRadius: 30,
+      borderBottomEndRadius: 30,
+      ...boxShadowStyles,
+      marginTop: -35,
+      // marginVertical: -10,
+      paddingTop: 40,
+      width: Dimensions.get('window').width,
+    },
+    row: {
+      justifyContent: 'space-around',
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+    },
+    column: {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    subRow: {
+      flexDirection: 'row',
+      alignItems: 'baseline',
+    },
+    subColumn: {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+  }),
+  forecastBlock: StyleSheet.create({
+    ...defaultStyles,
     item: {
-      backgroundColor: '#FFB385',
-      padding: 25,
-      marginVertical: 8,
-      marginHorizontal: 4,
-      borderRadius: 10,
+      justifyContent: 'space-around',
+      flexDirection: 'row',
+      alignItems: 'stretch',
+      marginTop: -30,
+      paddingTop: 40,
+      // paddingVertical: 30,
+      width: Dimensions.get('window').width,
+      borderBottomStartRadius: 40,
+      borderBottomEndRadius: 40,
     },
-    title: {
-      fontSize: 24,
-      fontWeight: 'bold',
-    },
+    shadowBox: boxShadowStyles,
     text: {
-      ...baseTextStyles,
-      color: 'white',
+      ...defaultStyles.text,
+      textShadowColor: 'black',
+      textShadowOffset: { width: 100, height: 100 },
+      textShadowRadius: 5,
+    },
+  }),
+  currentForecastStyles: StyleSheet.create({
+    ...defaultStyles,
+    text: {
+      ...defaultTextStyles,
+      fontSize: 50,
+    },
+    row: {
+      justifyContent: 'space-around',
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      marginVertical: 5,
+      width: Dimensions.get('window').width,
+    },
+    block: {
+      marginVertical: 5,
+    },
+    column: {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    subRow: {
+      flexDirection: 'row',
+      alignItems: 'baseline',
+    },
+    subColumn: {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    container: {
+      ...defaultStyles.container,
+      backgroundColor: defaultBackgroundColor(),
+      borderBottomStartRadius: 30,
+      borderBottomEndRadius: 30,
+      ...boxShadowStyles,
+      shadowOffset: {
+        width: 0,
+        height: 20,
+      },
     },
   }),
   styles: StyleSheet.create({
-    ...sharedStyles,
+    ...defaultStyles,
     baseText: {
       fontFamily: 'Avenir',
       fontSize: 25,

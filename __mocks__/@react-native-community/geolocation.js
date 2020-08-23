@@ -2,7 +2,7 @@ import jest from 'jest-mock';
 
 export default {
   addListener: jest.fn(),
-  getCurrentPosition: jest.fn().mockImplementationOnce(success =>
+  getCurrentPosition: jest.fn().mockImplementationOnce((success) =>
     Promise.resolve(
       success({
         coords: {

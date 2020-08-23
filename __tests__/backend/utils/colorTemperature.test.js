@@ -3,38 +3,62 @@
  */
 
 import 'react-native';
-import { getColorTempGradient } from '../../../src/helpers/colorTemperature';
 
-// Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
+import { getColorGradientFromTemperature } from '../../../src/helpers/colorTemperature';
 
-const testTemperatures = [
-  { testTemperature: -45, expectedHexColor: '#a1ffff' },
-  { testTemperature: 12, expectedHexColor: '#00CCFF' },
-  { testTemperature: 33, expectedHexColor: '#00CCFF' },
-  { testTemperature: 56, expectedHexColor: '#FFCC66' },
-  { testTemperature: 78, expectedHexColor: '#FFCC66' },
-  { testTemperature: 89, expectedHexColor: '#FF9966' },
-  { testTemperature: 96, expectedHexColor: '#FF9966' },
-  { testTemperature: 100, expectedHexColor: '#FF9966' },
-  { testTemperature: 115, expectedHexColor: '#FF9966' },
-];
+const testTemperatures = Array(110 - 2 + 1)
+  .fill()
+  .map((_, idx) => 3 + idx);
 
-describe.each(testTemperatures)(
-  'getColorTempGradient',
-  ({ testTemperature, expectedHexColor }) => {
-    describe('Positive cases', () => {
-      it(`gets the expected hex color: "${expectedHexColor}" when temperature is: "${testTemperature}"`, () => {
-        const result = getColorTempGradient(testTemperature);
-        expect(result).toBe(expectedHexColor);
+describe('getColorGradientFromTemperature', () => {
+  // getColorGradientFromTemperature
+  test.each(testTemperatures)(
+    'Generates color gradient for Hourly "%i" temperature in daytime',
+    (temperature) => {
+      const colorGradient = getColorGradientFromTemperature({
+        temperature,
+        isDaytime: true,
       });
-    });
+      expect(colorGradient.length).toBe(2);
+      expect(colorGradient[0]).toEqual(colorGradient[1]);
+    },
+  );
 
-    describe('Negative cases', () => {
-      it(`doesn't get the hex color: "#FFFFFF" when temperature is: "${testTemperature}"`, () => {
-        const result = getColorTempGradient(testTemperature);
-        expect(result).not.toBe('#FFFFFF');
+  test.each(testTemperatures)(
+    'Generates color gradient for Hourly "%i" temperature in nighttime',
+    (temperature) => {
+      const colorGradient = getColorGradientFromTemperature({
+        temperature,
+        isDaytime: false,
       });
-    });
-  },
-);
+      expect(colorGradient.length).toBe(2);
+      expect(colorGradient[0]).toEqual(colorGradient[1]);
+    },
+  );
+
+  test.each(testTemperatures)(
+    'Generates color gradient for Hourly "%i" temperature in daytime',
+    (temperature) => {
+      const colorGradient = getColorGradientFromTemperature({
+        dayTemp: temperature,
+        nightTemp: temperature / 2,
+        isDaytime: true,
+      });
+      expect(colorGradient.length).toBe(2);
+      expect(colorGradient[0]).not.toEqual(colorGradient[1]);
+    },
+  );
+
+  test.each(testTemperatures)(
+    'Generates color gradient for Hourly "%i" temperature in nighttime',
+    (temperature) => {
+      const colorGradient = getColorGradientFromTemperature({
+        dayTemp: temperature,
+        nightTemp: temperature / 2,
+        isDaytime: false,
+      });
+      expect(colorGradient.length).toBe(2);
+      expect(colorGradient[0]).not.toEqual(colorGradient[1]);
+    },
+  );
+});
